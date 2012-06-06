@@ -1,32 +1,36 @@
 
 module ::Magnets::HTML::Form::ClassInstance
+    
+  ::Magnets::Bindings::Attributes.define_container_type( :HTML_form, :HTML_view_model ) do
 
-  ::Magnets::Bindings::Attributes.define_container_type( :HTML_form, :HTML_view_model )
+    base = ::Magnets::HTML::Form::Input
+    
+    define_binding_type( :button_input ).__view_class__ = base::ButtonInput
+    define_binding_type( :checkbox_input ).__view_class__ = base::CheckboxInput
+    define_binding_type( :color_input ).__view_class__ = base::ColorInput
+    define_binding_type( :datalist_input ).__view_class__ = base::DataListInput
+    define_binding_type( :date_input ).__view_class__ = base::DateInput
+    define_binding_type( :datetime_input ).__view_class__ = base::DateTimeInput
+    define_binding_type( :email_input ).__view_class__ = base::EmailInput
+    define_binding_type( :file_input ).__view_class__ = base::FileUploadInput
+    define_binding_type( :hidden_input ).__view_class__ = base::HiddenInput
+    define_binding_type( :month_input ).__view_class__ = base::MonthInput
+    define_binding_type( :number_input ).__view_class__ = base::NumberInput
+    define_binding_type( :password_input ).__view_class__ = base::PasswordInput
+    define_binding_type( :radio_input ).__view_class__ = base::RadioInput
+    define_binding_type( :range_input ).__view_class__ = base::RangeInput
+    define_binding_type( :search_input ).__view_class__ = base::SearchInput
+    define_binding_type( :select_input ).__view_class__ = base::SelectInput
+    define_binding_type( :telephone_input ).__view_class__ = base::TelephoneInput
+    define_binding_type( :textarea_input ).__view_class__ = base::TextInput
+    define_binding_type( :text_input ).__view_class__ = base::TextInput::TextAreaInput 
+    define_binding_type( :time_input ).__view_class__ = base::TimeInput
+    define_binding_type( :url_input ).__view_class__ = base::URLInput
+    define_binding_type( :week_input ).__view_class__ = base::WeekInput
+    
+  end
   
   include ::Magnets::Bindings::AttributeContainer::HTMLForm
-  
-  #include ::Magnets::HTML::Form::ClassInstance::ButtonInput
-  #include ::Magnets::HTML::Form::ClassInstance::CheckboxInput
-  #include ::Magnets::HTML::Form::ClassInstance::ColorInput
-  #include ::Magnets::HTML::Form::ClassInstance::DataListInput
-  #include ::Magnets::HTML::Form::ClassInstance::DateInput
-  #include ::Magnets::HTML::Form::ClassInstance::DateTimeInput 
-  #include ::Magnets::HTML::Form::ClassInstance::EmailInput
-  #include ::Magnets::HTML::Form::ClassInstance::FileUploadInput
-  #include ::Magnets::HTML::Form::ClassInstance::HiddenInput
-  #include ::Magnets::HTML::Form::ClassInstance::MonthInput
-  #include ::Magnets::HTML::Form::ClassInstance::NumberInput
-  #include ::Magnets::HTML::Form::ClassInstance::PasswordInput
-  #include ::Magnets::HTML::Form::ClassInstance::RadioInput
-  #include ::Magnets::HTML::Form::ClassInstance::RangeInput
-  #include ::Magnets::HTML::Form::ClassInstance::SearchInput
-  #include ::Magnets::HTML::Form::ClassInstance::SelectInput
-  #include ::Magnets::HTML::Form::ClassInstance::TelephoneInput
-  #include ::Magnets::HTML::Form::ClassInstance::TextInput
-  #include ::Magnets::HTML::Form::ClassInstance::TextInput::TextAreaInput
-  #include ::Magnets::HTML::Form::ClassInstance::TextInput
-  #include ::Magnets::HTML::Form::ClassInstance::URLInput
-  #include ::Magnets::HTML::Form::ClassInstance::WeekInput
 
   include ::Magnets::HTML::Form::ClassInstance::ValidationDefinition
 
@@ -95,8 +99,8 @@ module ::Magnets::HTML::Form::ClassInstance
 		  
 		  case view_class = this_binding_instance.__view_class__
 		    
-  	    when ::Magnets::HTML::Form::Input::ClassInstance
-	        
+  	    when ::Magnets::HTML::Form::Input::ClassInstance	
+        
   	      unless this_binding_instance.__validate_form_value__( this_form_value_or_nested_values )
   	        validates = false
   	      end

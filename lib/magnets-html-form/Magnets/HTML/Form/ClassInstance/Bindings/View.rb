@@ -12,8 +12,8 @@ module ::Magnets::HTML::Form::ClassInstance
     # enable attr_form for forms declared as attr_view
     bindings.each do |this_binding|
       case view_class = this_binding.__view_class__
-        when ::Magnets::HTML::Form::Input::ClassInstance
-          # nothing to do here
+        when ::Magnets::HTML::Form::Input::ClassInstance 
+         # nothing to do here
         when ::Magnets::HTML::Form::ClassInstance
           __initialize_view_binding_as_form_binding__( this_binding )
         when ::Magnets::Abstract::View::ClassInstance

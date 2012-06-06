@@ -1,12 +1,13 @@
 
 require_relative '../../../../../lib/magnets-html-form.rb'
 
-describe ::Magnets::HTML::Form::Input::Button do
+describe ::Magnets::HTML::Form::Input::ButtonInput do
+
   
   it 'packages HTML elements for automated use in a form' do
     
-    class ::Magnets::HTML::Form::Input::Button
-      
+    class ::Magnets::HTML::Form::Input::ButtonInput 
+     
       has_binding?( :input ).should == true
       method_defined?( :input_view ).should == true
       has_binding?( :value ).should == true
@@ -16,13 +17,13 @@ describe ::Magnets::HTML::Form::Input::Button do
       has_binding?( :error ).should == true
       method_defined?( :error_view ).should == true
       
-      input.__view_class__.should == ::Magnets::HTML::Elements::Form::Input::Button
-      
+      input.__view_class__.should == ::Magnets::HTML::Elements::Form::Input::ButtonInput 
+     
     end
     
-    ::Magnets::HTML::Form::Input::Button.new.instance_eval do
-      label_view.for_input.should == input
-      error_view.for_input.should == input
+    ::Magnets::HTML::Form::Input::ButtonInput.new.instance_eval do
+      label_view.for_input.should == input_view
+      error_view.for_input.should == input_view
     end
     
   end

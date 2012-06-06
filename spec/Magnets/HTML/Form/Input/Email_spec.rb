@@ -1,28 +1,29 @@
 
-require_relative '../../../../lib/magnets-form.rb'
+require_relative '../../../../../lib/magnets-html-form.rb'
 
-describe ::Magnets::HTML::Form::Input::Email do
+describe ::Magnets::HTML::Form::Input::EmailInput do
+
   
   it 'packages HTML elements for automated use in a form' do
     
-    class ::Magnets::HTML::Form::Input::Email
-      
+    class ::Magnets::HTML::Form::Input::EmailInput 
+     
       has_binding?( :input ).should == true
-      has_binding?( :input_view ).should == false
+      method_defined?( :input_view ).should == true
       has_binding?( :value ).should == true
-      has_binding?( :value_view ).should == false
+      method_defined?( :value_view ).should == true
       has_binding?( :label ).should == true
-      has_binding?( :label_view ).should == true
+      method_defined?( :label_view ).should == true
       has_binding?( :error ).should == true
-      has_binding?( :error_view ).should == true
+      method_defined?( :error_view ).should == true
       
-      input.__view_class__.should == ::Magnets::HTML::Elements::Form::Input::Email
-      
+      input.__view_class__.should == ::Magnets::HTML::Elements::Form::Input::EmailInput 
+     
     end
     
-    ::Magnets::HTML::Form::Input::Email.new.instance_eval do
-      label_view.for_input.should == input
-      error_view.for_input.should == input
+    ::Magnets::HTML::Form::Input::EmailInput.new.instance_eval do
+      label_view.for_input.should == input_view
+      error_view.for_input.should == input_view
     end
     
   end
