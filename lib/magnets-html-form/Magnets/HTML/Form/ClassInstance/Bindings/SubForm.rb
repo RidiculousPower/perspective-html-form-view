@@ -14,7 +14,7 @@ module ::Magnets::HTML::Form::ClassInstance
       this_binding.__form_permitted__ = true
       this_binding_name = this_binding.__name__
       __bindings_with_forms__[ this_binding_name ] = this_binding
-      __data_validation_class__.define_subview( this_binding_name )
+      self::DataValidationClass.define_subview( this_binding_name )
     end
     
     return bindings

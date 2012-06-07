@@ -38,7 +38,7 @@ module ::Magnets::HTML::Form::ClassInstance
     binding_instance.rendering_inside_form!
     binding_name = binding_instance.__name__
     __bindings_with_forms__[ binding_name ] = binding_instance
-    __data_validation_class__.define_subview( binding_name )
+    self::DataValidationClass.define_subview( binding_name )
     
   end
   

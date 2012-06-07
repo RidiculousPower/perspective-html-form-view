@@ -4,7 +4,7 @@ require_relative '../../../../lib/magnets-html-form.rb'
 describe ::Magnets::HTML::Form::DataValidationObject do
 
   #####################################
-  #  self.new_validated_object_class  #
+  #  self.create_data_validation_class  #
   #  self.view_class                  #
   #  self.define_input                #
   #  self.define_subview             #
@@ -19,7 +19,7 @@ describe ::Magnets::HTML::Form::DataValidationObject do
       include ::Magnets::HTML::View
       attr_view :some_subview, ::Magnets::HTML::Form::DataValidationObject::MockView2
     end
-    new_instance = ::Magnets::HTML::Form::DataValidationObject.new_validated_object_class( ::Magnets::HTML::Form::DataValidationObject::MockView )
+    new_instance = ::Magnets::HTML::Form::DataValidationObject.create_data_validation_class( ::Magnets::HTML::Form::DataValidationObject::MockView )
     new_instance.view_class.should == ::Magnets::HTML::Form::DataValidationObject::MockView
     new_instance.define_input( :some_input )
     new_instance.respond_to?( :some_input ).should == false

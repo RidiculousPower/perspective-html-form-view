@@ -3,9 +3,9 @@ require_relative '../../../lib/magnets-form.rb'
 
 describe ::Magnets::HTML::Form::Request do
   
-  ###########################
-	#  initialize_parameters  #
-  ###########################
+  ################################
+	#  initialize_form_parameters  #
+  ################################
   
   it 'it can turn a hash of PUT/POST data with keys named path-to-binding into a nested data validation object' do
     class ::Magnets::Request::Mock
@@ -14,42 +14,42 @@ describe ::Magnets::HTML::Form::Request do
       class MockSubViewPathToSomeOtherBinding
         include ::Magnets::HTML::Form
         attr_text_input :one, :two
-        __data_validation_class__.method_defined?( :one ).should == true
-        __data_validation_class__.method_defined?( :two ).should == true
+        self::DataValidationClass.method_defined?( :one ).should == true
+        self::DataValidationClass.method_defined?( :two ).should == true
         __has_input__?.should == true
       end
       class MockSubViewPathToSomeOther
         include ::Magnets::Abstract::View
         attr_form :binding, ::Magnets::Request::Mock::MockSubViewPathToSomeOtherBinding
         __has_input__?.should == true
-        __data_validation_class__.method_defined?( :binding ).should == true
+        self::DataValidationClass.method_defined?( :binding ).should == true
       end
       class MockSubViewPathToSome
         include ::Magnets::Abstract::View
         attr_view :other, ::Magnets::Request::Mock::MockSubViewPathToSomeOther
-        __data_validation_class__.method_defined?( :other ).should == true
+        self::DataValidationClass.method_defined?( :other ).should == true
         __has_input__?.should == true
       end
       class MockSubViewPathToAnotherBinding
         include ::Magnets::HTML::Form
         attr_text_input :one, :two, :three
-        __data_validation_class__.method_defined?( :one ).should == true
-        __data_validation_class__.method_defined?( :two ).should == true
-        __data_validation_class__.method_defined?( :three ).should == true
+        self::DataValidationClass.method_defined?( :one ).should == true
+        self::DataValidationClass.method_defined?( :two ).should == true
+        self::DataValidationClass.method_defined?( :three ).should == true
         __has_input__?.should == true
       end
       class MockSubViewPathToAnother
         include ::Magnets::Abstract::View
         attr_view :binding, ::Magnets::Request::Mock::MockSubViewPathToAnotherBinding
-        __data_validation_class__.method_defined?( :binding ).should == true
+        self::DataValidationClass.method_defined?( :binding ).should == true
         __has_input__?.should == true
       end
       class MockSubViewPathToBinding
         include ::Magnets::HTML::Form
         attr_text_input :one, :two, :three
-        __data_validation_class__.method_defined?( :one ).should == true
-        __data_validation_class__.method_defined?( :two ).should == true
-        __data_validation_class__.method_defined?( :three ).should == true
+        self::DataValidationClass.method_defined?( :one ).should == true
+        self::DataValidationClass.method_defined?( :two ).should == true
+        self::DataValidationClass.method_defined?( :three ).should == true
         __has_input__?.should == true
       end
       class MockSubViewPathTo
@@ -57,21 +57,21 @@ describe ::Magnets::HTML::Form::Request do
         attr_view :binding, ::Magnets::Request::Mock::MockSubViewPathToBinding
         attr_view :another, ::Magnets::Request::Mock::MockSubViewPathToAnother
         attr_view :some, ::Magnets::Request::Mock::MockSubViewPathToSome
-        __data_validation_class__.method_defined?( :binding ).should == true
-        __data_validation_class__.method_defined?( :another ).should == true
-        __data_validation_class__.method_defined?( :some ).should == true
+        self::DataValidationClass.method_defined?( :binding ).should == true
+        self::DataValidationClass.method_defined?( :another ).should == true
+        self::DataValidationClass.method_defined?( :some ).should == true
         __has_input__?.should == true
       end
       class MockSubViewPath
         include ::Magnets::Abstract::View
         attr_view :to, ::Magnets::Request::Mock::MockSubViewPathTo
-        __data_validation_class__.method_defined?( :to ).should == true
+        self::DataValidationClass.method_defined?( :to ).should == true
         __has_input__?.should == true
       end
       class MockForm
         include ::Magnets::HTML::Form
         attr_view :path, ::Magnets::Request::Mock::MockSubViewPath
-        __data_validation_class__.method_defined?( :path ).should == true
+        self::DataValidationClass.method_defined?( :path ).should == true
         __has_input__?.should == true
       end
 
@@ -90,7 +90,7 @@ describe ::Magnets::HTML::Form::Request do
     
     ::Magnets::Request::Mock.new.instance_eval do
 
-      initialize_parameters( ::Magnets::Request::Mock::MockForm )
+      initialize_form_parameters( ::Magnets::Request::Mock::MockForm )
 
       @parameters.respond_to?( :path ).should == true
       @parameters.path.respond_to?( :to ).should == true

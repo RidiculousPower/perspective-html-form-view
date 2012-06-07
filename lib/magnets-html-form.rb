@@ -3,26 +3,24 @@ require_relative '../../elements/lib/magnets-html-elements.rb'
 require_relative '../../view-model/lib/magnets-html-view-model.rb'
 require_relative '../../../request/lib/magnets-request.rb'
 
-module ::Magnets
-  module HTML
-  	module Form
-  	  module Bindings
+module ::Magnets::HTML
+	module Form
+	  module Bindings
+    end
+		module ClassInstance
+		  module Bindings
+		    module Input
+	      end
+	    end
+		end
+		module Input
+		  module ClassInstance
       end
-  		module ClassInstance
-  		  module Bindings
-  		    module Input
-  	      end
-  	    end
-  		end
-  		module Input
-  		  module ClassInstance
-        end
-  	  end
-  		module ObjectInstance
-  		end
-  		module View
-  	  end
-  	end
+	  end
+		module ObjectInstance
+		end
+		module View
+	  end
 	end
 end
 
@@ -30,17 +28,8 @@ basepath = 'magnets-html-form/Magnets/HTML/Form'
 
 files = [
 
-  'ClassInstance/ValidationDefinition',
-  'ObjectInstance/ValidationDefinition',
-
-  'DataValidationObject',
-
-  'Bindings/ClassBinding',
-  'Bindings/InstanceBinding',
+  'RackApplication',
   
-  'Binding',
-  'Binding/FormSupport',
-
   'Input',
   'Input/ButtonInput',
   'Input/CheckboxInput',
@@ -60,21 +49,25 @@ files = [
   'Input/SelectInput',
   'Input/TelephoneInput',
   'Input/TextInput',
-  'Input/Text/TextAreaInput',
+  'Input/TextInput/TextAreaInput',
   'Input/TimeInput',
   'Input/URLInput',
   'Input/WeekInput',
   
-  'View/ClassInstance',
-  'View/ObjectInstance',
+  'DataValidationObject',
+
+  'Configuration',
+
+  'Context',
+
+  'Bindings/ClassBinding',
+  'Bindings/InstanceBinding',
   
   'ClassInstance',
   'ObjectInstance',
   
-  'Request',
-  
-  'RackApplication'
-  
+  'Exception/FormBindingExpected'
+    
 ]
 
 files.each do |this_file|
@@ -87,6 +80,10 @@ module ::Magnets
   extend ::Magnets::HTML::Form::RackApplication
 end
 
-class ::Magnets::Request
-  include ::Magnets::HTML::Form::Request
+module ::Magnets::Bindings::AttributeContainer::HTMLForm::ClassBinding
+  include ::Magnets::HTML::Form::Bindings::ClassBinding
+end
+
+module ::Magnets::Bindings::AttributeContainer::HTMLForm::InstanceBinding
+  include ::Magnets::HTML::Form::Bindings::InstanceBinding
 end
