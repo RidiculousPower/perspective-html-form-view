@@ -6,8 +6,6 @@ module ::Magnets::HTML::Form::ObjectInstance
   include ::Magnets::HTML::Form::Configuration
 
   include ::CascadingConfiguration::Setting
-  include ::CascadingConfiguration::Array::Unique
-  include ::CascadingConfiguration::Hash
 
 	# Unlike other containers, in this case we actually need to be a Form to start.
 	# This is because we expect all forms to have a hidden input with the form processing path.
@@ -15,9 +13,11 @@ module ::Magnets::HTML::Form::ObjectInstance
   
   ccm = ::CascadingConfiguration::Methods
   
-  ##########################################
-  #  __hidden_input_name_for_form_route__  #
-  ##########################################
+  ####################################################
+  #  __hidden_input_for_form_route_input_name__      #
+  #  __alternate_hidden_input_for_form_route_name__  #
+  #  __hidden_input_for_form_route_binding_name__    #
+  ####################################################
 
   # We need to be able to identify the form binding route from other form inputs.
 	# Since we want to be able to redraw the form without first reloading a url we don't want
@@ -26,9 +26,14 @@ module ::Magnets::HTML::Form::ObjectInstance
 	#
 	# We want the name to be unique and preferably short, since it will appear in GET strings.
 	# 
-	attr_module_configuration  :__hidden_input_name_for_form_route__
+	attr_module_configuration  :__hidden_input_for_form_route_input_name__, 
+	                           :__alternate_hidden_input_for_form_route_name__,
+	                           :__hidden_input_for_form_route_binding_name__
 
-  self.__hidden_input_name_for_form_route__ = :_MFAR_
+  # MFR for "Magnets Form Route"
+  self.__hidden_input_for_form_route_input_name__   = :MFR
+  self.__alternate_hidden_input_for_form_route_name__ = :__MFR__
+  self.__hidden_input_for_form_route_binding_name__ = :__Magnets_Form_Route__
   	
   ###############################
   #  subform_container_tag      #
@@ -41,96 +46,38 @@ module ::Magnets::HTML::Form::ObjectInstance
 
   self.__container_tag__ = :form
   self.__subform_container_tag__ = :div
-
-  ################
-  #  action      #
-  #  __action__  #
-  ################
-
-  attr_configuration  :__action__
-
-  ccm.alias_module_and_instance_methods( self, :action, :__action__ )
-
-  def __action__=( action_method_GET_or_POST )
+  
+  #############
+  #  to_html  #
+  #############
+  
+  def to_html
     
-    case action = action_method_GET_or_POST.upcase
+    if nested?
+      
+      hidden_binding_name = ::Magnets::Form.__hidden_input_for_form_route_binding_name__
+      hidden_binding_instance = __binding__( hidden_binding_name )
 
-      when :GET, :POST
-
-        super( action )
-
+      __binding_order__.push( hidden_binding_instance )
+    
     end
     
-  end
-  
-  alias_method( :action=, :__action__= )
-
-  ###########
-  #  post!  #
-  #  POST!  #
-  ###########
-
-  def post!
-    
-    self.__action__ = :POST
+    return super
     
   end
-  
-  alias_method( :POST!, :post! )
 
-  ##########
-  #  get!  #
-  #  GET!  #
-  ##########
-  
-  def get!
-    
-    self.__action__ = :GET
-
-  end
-
-  alias_method( :GET!, :get! )
-
-  ###########
-  #  post?  #
-  #  POST?  #
-  ###########
-
-  def post?
-    
-    return __action__ == :POST
-    
-  end
-  
-  alias_method( :POST?, :post? )
-
-  ##########
-  #  get?  #
-  #  GET?  #
-  ##########
-  
-  def get?
-    
-    return __action__ == :GET
-
-  end
-
-  alias_method( :GET?, :get? )
-
-  ################################
-	#  initialize_form_parameters  #
-  ################################
+  #########################################
+	#  __initialize_from_form_parameters__  #
+  #########################################
 	
-  def initialize_form_parameters( form_root_class )
-    
-    @__parameters__ = form_root_class::DataValidationClass.new
-    
+  def __initialize_from_form_parameters__
+        
     # we have 'path-to-binding' => value
     # we want to turn it into path.to.binding = value
-    raw_parameters.each do |this_parameter_route_name, this_parameter_value|
+    ::Magnets::Request.raw_parameters.each do |this_parameter_route_name, this_parameter_value|
       
       # The current data validation context.
-      this_input_location = @__parameters__
+      this_context = self
       
       # The post/put name we are splitting into nested hash values.
       this_route_remainder = this_parameter_route_name
@@ -148,9 +95,7 @@ module ::Magnets::HTML::Form::ObjectInstance
         this_route_remainder = this_route_remainder.slice( this_index + 1, this_remainder_length )
 
         # if we got badly formed parameter route name, skip to the next parameter
-        if this_input_location.respond_to?( this_route_part )
-          this_input_location = this_input_location.__send__( this_route_part )
-        else
+        unless this_context = this_context.__binding__( this_route_part )
           badly_formed_route = true
           break
         end
@@ -172,14 +117,88 @@ module ::Magnets::HTML::Form::ObjectInstance
       # last remaining part is binding name for input corresponding to value
       this_input_name = this_route_remainder
 
-      if this_input_location.respond_to?( this_input_name.write_accessor_name )
-        this_input_location.__send__( this_input_name.write_accessor_name, this_parameter_value )
+      if this_input_binding_instance = this_context.__binding__( this_input_name )
+        this_input_binding_instance.__value__ = this_parameter_value
       end
       
     end
     
-    return @__parameters__
+    return self
     
   end
+
+  ################
+  #  validates?  #
+  ################
+
+  def validates?
     
+    validates = false
+    
+    if validates = inputs_validate?
+      validates = validation_procs_validate?
+    end
+    
+    return validates
+    
+  end
+  
+  ######################
+  #  inputs_validate?  #
+  ######################
+
+  def inputs_validate?
+    
+    validates = true
+    
+    __input_bindings__.each do |this_input_binding|
+      unless this_input_binding.value_validates?
+        validates = false
+      end
+    end
+    
+    return validates
+    
+  end
+  
+  ################################
+  #  validation_procs_validate?  #
+  ################################
+
+  def validation_procs_validate?
+
+    validates = false
+
+		__validation_procs__.each do |this_validation_proc|
+		  break unless validates = instance_exec( & this_validation_proc )
+    end
+    
+    return validates
+
+  end
+
+  ##############
+  #  success!  #
+  ##############
+
+  def success!
+
+    __success_procs__.each do |this_success_proc|
+      instance_exec( & this_success_proc )
+    end
+
+  end
+  
+  ##############
+  #  failure!  #
+  ##############
+  
+  def failure!
+
+    __failure_procs__.each do |this_failure_proc|
+      instance_exec( & this_failure_proc )
+    end
+    
+  end
+  
 end

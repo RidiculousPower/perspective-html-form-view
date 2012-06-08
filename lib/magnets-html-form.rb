@@ -54,8 +54,6 @@ files = [
   'Input/URLInput',
   'Input/WeekInput',
   
-  'DataValidationObject',
-
   'Configuration',
 
   'Context',

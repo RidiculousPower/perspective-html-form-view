@@ -35,19 +35,5 @@ module ::Magnets::HTML::Form::ClassInstance
   end
   
   include ::Magnets::Bindings::AttributeContainer::HTMLForm
-
-	################
-  #  attr_order  #
-  ################
-
-	def attr_order( *binding_order_array )
-	  
-	  return_value = super
-	  
-    __binding_order__.push( __binding__( __hidden_input_name_for_form_route__ ) )
-	  
-	  return return_value
-	  
-  end
   
 end

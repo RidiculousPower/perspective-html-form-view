@@ -15,7 +15,8 @@ module ::Magnets::HTML::Form
 	# This is because we expect all forms to have a hidden input with the form processing path.
 	extend ::Magnets::HTML::Form::ClassInstance
 
-	attr_hidden_input  __hidden_input_name_for_form_route__ do |hidden_form_name_input|
+	attr_hidden_input  __hidden_input_for_form_route_binding_name__ do |hidden_form_name_input|
+	  hidden_form_name_input.name = __hidden_input_for_form_route_binding_name__
 	  hidden_form_name_input.__value__ = __route_string__
   end
 			  

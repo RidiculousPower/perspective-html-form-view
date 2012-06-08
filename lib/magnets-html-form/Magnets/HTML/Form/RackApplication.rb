@@ -13,10 +13,13 @@ module ::Magnets::HTML::Form::RackApplication
         
     # if we have POST or PUT with FormProcessingURLBase, process form results
     if ( @request.post? or @request.get? )                                         and 
-       form_route_key = ::Magnets::HTML::Form.__hidden_input_name_for_form_route__ and
-       form_route = @request.raw_parameters.delete( form_route_key )
+       form_route_key = ::Magnets::HTML::Form.__hidden_input_for_form_route_input_name__ and
+       form_route_string = @request.raw_parameters.delete( form_route_key )
       
-      process_form_values( form_route )
+      form_route = form_route_string.split( ::Magnets::Bindings::RouteDelimiter )
+      binding_name = form_route.pop
+      
+      process_form_values( form_route, binding_name )
     
     else
       
@@ -48,18 +51,18 @@ module ::Magnets::HTML::Form::RackApplication
   #  process_form_values  #
   #########################
 	
-  def process_form_values( form_route )
-        
-    form_root_binding = ::Magnets::HTML::Form.form_in_context( @root_instance, form_route )
+  def process_form_values( form_route, binding_name )
     
-    form_class = form_root_binding.__form_class__
+    form_root_binding = ::Magnets::HTML::Form.form_binding_in_context( @root_instance,
+                                                                       form_route, 
+                                                                       binding_name )
     
     form_instance = form_class.new
-    
-    form_instance.initialize_form_parameters
-    
+       
+    form_instance.__initialize_from_form_parameters__
+     
     # redirect based on success/failure
-    if form_root.__process_form_values__( @request.parameters )
+    if form_instance.validates?
 
     else
       
