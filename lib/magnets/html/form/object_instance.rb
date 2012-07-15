@@ -11,8 +11,6 @@ module ::Magnets::HTML::Form::ObjectInstance
 	# This is because we expect all forms to have a hidden input with the form processing path.
 	extend ::Magnets::HTML::Form::ClassInstance
   
-  ccm = ::CascadingConfiguration::Methods
-  
   ####################################################
   #  __hidden_input_for_form_route_input_name__      #
   #  __alternate_hidden_input_for_form_route_name__  #
@@ -27,14 +25,12 @@ module ::Magnets::HTML::Form::ObjectInstance
 	# We want the name to be unique and preferably short, since it will appear in GET strings.
 	# 
 	attr_module_configuration  :__hidden_input_for_form_route_input_name__, 
-	                           :__alternate_hidden_input_for_form_route_name__,
 	                           :__hidden_input_for_form_route_binding_name__
 
   # MFR for "Magnets Form Route"
-  self.__hidden_input_for_form_route_input_name__   = :MFR
-  self.__alternate_hidden_input_for_form_route_name__ = :__MFR__
-  self.__hidden_input_for_form_route_binding_name__ = :__Magnets_Form_Route__
-  	
+  self.__hidden_input_for_form_route_input_name__   = '*MFR*'
+  self.__hidden_input_for_form_route_binding_name__ = '*MFR*'.to_sym
+  
   ###############################
   #  subform_container_tag      #
   #  __subform_container_tag__  #
@@ -42,30 +38,11 @@ module ::Magnets::HTML::Form::ObjectInstance
 
 	attr_configuration  :__subform_container_tag__
 
-  ccm.alias_module_and_instance_methods( self, :subform_container_tag, :__subform_container_tag__ )
+  Controller.alias_module_and_instance_methods( :subform_container_tag, :__subform_container_tag__ )
 
   self.__container_tag__ = :form
   self.__subform_container_tag__ = :div
   
-  #############
-  #  to_html  #
-  #############
-  
-  def to_html
-    
-    if nested?
-      
-      hidden_binding_name = ::Magnets::Form.__hidden_input_for_form_route_binding_name__
-      hidden_binding_instance = __binding__( hidden_binding_name )
-
-      __binding_order__.push( hidden_binding_instance )
-    
-    end
-    
-    return super
-    
-  end
-
   #########################################
 	#  __initialize_from_form_parameters__  #
   #########################################

@@ -19,13 +19,13 @@ describe ::Magnets::HTML::Form::Request do
         __has_input__?.should == true
       end
       class MockSubViewPathToSomeOther
-        include ::Magnets::Abstract::View
+        include ::Magnets::View
         attr_form :binding, ::Magnets::Request::Mock::MockSubViewPathToSomeOtherBinding
         __has_input__?.should == true
         self::DataValidationClass.method_defined?( :binding ).should == true
       end
       class MockSubViewPathToSome
-        include ::Magnets::Abstract::View
+        include ::Magnets::View
         attr_view :other, ::Magnets::Request::Mock::MockSubViewPathToSomeOther
         self::DataValidationClass.method_defined?( :other ).should == true
         __has_input__?.should == true
@@ -39,7 +39,7 @@ describe ::Magnets::HTML::Form::Request do
         __has_input__?.should == true
       end
       class MockSubViewPathToAnother
-        include ::Magnets::Abstract::View
+        include ::Magnets::View
         attr_view :binding, ::Magnets::Request::Mock::MockSubViewPathToAnotherBinding
         self::DataValidationClass.method_defined?( :binding ).should == true
         __has_input__?.should == true
@@ -53,7 +53,7 @@ describe ::Magnets::HTML::Form::Request do
         __has_input__?.should == true
       end
       class MockSubViewPathTo
-        include ::Magnets::Abstract::View
+        include ::Magnets::View
         attr_view :binding, ::Magnets::Request::Mock::MockSubViewPathToBinding
         attr_view :another, ::Magnets::Request::Mock::MockSubViewPathToAnother
         attr_view :some, ::Magnets::Request::Mock::MockSubViewPathToSome
@@ -63,7 +63,7 @@ describe ::Magnets::HTML::Form::Request do
         __has_input__?.should == true
       end
       class MockSubViewPath
-        include ::Magnets::Abstract::View
+        include ::Magnets::View
         attr_view :to, ::Magnets::Request::Mock::MockSubViewPathTo
         self::DataValidationClass.method_defined?( :to ).should == true
         __has_input__?.should == true

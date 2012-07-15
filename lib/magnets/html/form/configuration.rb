@@ -1,10 +1,8 @@
 
 module ::Magnets::HTML::Form::Configuration
-
+  
   include ::CascadingConfiguration::Setting
   include ::CascadingConfiguration::Array::Unique
-
-  ccm = ::CascadingConfiguration::Methods
 
   ################
   #  action      #
@@ -13,7 +11,7 @@ module ::Magnets::HTML::Form::Configuration
 
   attr_configuration  :__action__
 
-  ccm.alias_module_and_instance_methods( self, :action, :__action__ )
+  Controller.alias_module_and_instance_methods( :action, :__action__ )
     
   def __action__=( action_method_GET_or_POST )
     
@@ -88,7 +86,7 @@ module ::Magnets::HTML::Form::Configuration
   #  __form_bindings__  #
   #######################
 
-  attr_configuration_unique_array  :__form_bindings__ do
+  attr_unique_array  :__form_bindings__ do
     
     #======================#
 	  #  child_pre_set_hook  #
@@ -98,23 +96,31 @@ module ::Magnets::HTML::Form::Configuration
       
       nested_route = configuration_instance.__nested_route__( binding_instance )
       
-      child_instance = ::Magnets::Form.form_binding_in_context( nested_route, 
-                                                                binding_instance.__name__ )
+      if nested_route
 
+        child_instance = ::Magnets::HTML::Form.form_binding_in_context( configuration_instance, 
+                                                                        nested_route,
+                                                                        binding_instance.__name__ )
+        
+      else
+      
+        child_instance = configuration_instance.__binding__( binding_instance.__name__ )
+      end
+      
 	    return child_instance
 	    
 	  end
 	  
   end
 
-  ccm.alias_module_and_instance_methods( self, :form_bindings, :__form_bindings__ )
+  Controller.alias_module_and_instance_methods( :form_bindings, :__form_bindings__ )
 
   ########################
   #  input_bindings      #
   #  __input_bindings__  #
   ########################
 
-  attr_configuration_unique_array  :__input_bindings__ do
+  attr_unique_array  :__input_bindings__ do
     
     #================#
 	  #  pre_set_hook  #
@@ -152,7 +158,7 @@ module ::Magnets::HTML::Form::Configuration
 	  
   end
 
-  ccm.alias_module_and_instance_methods( self, :input_bindings, :__input_bindings__ )
+  Controller.alias_module_and_instance_methods( :input_bindings, :__input_bindings__ )
 
   ##############
   #  validate  #
@@ -188,25 +194,25 @@ module ::Magnets::HTML::Form::Configuration
   #  __validation_procs__  #
   ##########################
 
-  attr_configuration_unique_array  :__validation_procs__
+  attr_unique_array  :__validation_procs__
 
-  ccm.alias_module_and_instance_methods( self, :validation_procs, :__validation_procs__ )
+  Controller.alias_module_and_instance_methods( :validation_procs, :__validation_procs__ )
 
   #######################
   #  __success_procs__  #
   #######################
 
-  attr_configuration_unique_array  :__success_procs__
+  attr_unique_array  :__success_procs__
 
-  ccm.alias_module_and_instance_methods( self, :success_procs, :__success_procs__ )
+  Controller.alias_module_and_instance_methods( :success_procs, :__success_procs__ )
   
   #######################
   #  __failure_procs__  #
   #######################
 
-  attr_configuration_unique_array  :__failure_procs__
+  attr_unique_array  :__failure_procs__
 
-  ccm.alias_module_and_instance_methods( self, :failure_procs, :__failure_procs__ )
+  Controller.alias_module_and_instance_methods( :failure_procs, :__failure_procs__ )
 
   #################
   #  nested?      #

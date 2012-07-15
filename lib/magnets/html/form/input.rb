@@ -3,7 +3,10 @@ module ::Magnets::HTML::Form::Input
 
   include ::Magnets::HTML::View
   
-  include_or_extend_cascades_prepend_extends ::Magnets::HTML::Form::Input::ClassInstance
+  extend ::Module::Cluster
+  
+  cascade = cluster( :magnets ).before_include_or_extend.cascade
+  cascade.extend( ::Magnets::HTML::Form::Input::ClassInstance )
 
   attr_text_or_number  :input, ::Magnets::HTML::Elements::Form::Input::TextInput
   

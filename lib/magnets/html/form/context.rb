@@ -1,11 +1,11 @@
 
-module ::Magnets::HTML::Form::BindingContext
+module ::Magnets::HTML::Form::Context
 
-	##################################
-  #  self.form_binding_in_context  #
-  ##################################
+	#############################
+  #  form_binding_in_context  #
+  #############################
   
-  def self.form_binding_in_context( binding_context, binding_route, binding_name )
+  def form_binding_in_context( binding_context, binding_route, binding_name )
         
     # we need to get the shared binding context from our root 
     form_binding = ::Magnets::Bindings.binding_in_context( binding_context, 
