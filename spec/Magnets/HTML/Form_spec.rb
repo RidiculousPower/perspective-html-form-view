@@ -9,10 +9,11 @@ describe ::Magnets::HTML::Form do
     # the nested form should also have a nested form
     class ::Magnets::HTML::Form::MockC
       include ::Magnets::HTML::Form
-      attr_text_input :c_inputA do
-        c_inputA_view.label = 'C - Input A:'
-        c_inputA_view.name = 'c_inputA_view'
+      attr_text_input :c_inputA do |binding|
+        binding.label = 'C - Input A:'
+        binding.name = 'c_inputA_view'
       end
+      c_inputA.has_binding?( :input ).should == true
       #attr_text_input :c_inputB, ::Magnets::HTML::Form::Input::TextInput do
       #  c_inputB_view.label = 'C - Input B:'
       #end

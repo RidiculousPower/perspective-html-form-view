@@ -26,7 +26,7 @@ module ::Magnets::HTML::Form::ClassInstance
     define_binding_type( :search_input ).__view_class__ = base::SearchInput
     define_binding_type( :select_input ).__view_class__ = base::SelectInput
     define_binding_type( :telephone_input ).__view_class__ = base::TelephoneInput
-    define_binding_type( :text_input )#.__view_class__ = base::TextInput 
+    define_binding_type( :text_input ).__view_class__ = base::TextInput 
     define_binding_type( :textarea_input ).__view_class__ = base::TextInput::TextAreaInput
     define_binding_type( :time_input ).__view_class__ = base::TimeInput
     define_binding_type( :url_input ).__view_class__ = base::URLInput

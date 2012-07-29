@@ -32,11 +32,8 @@ module ::Magnets::HTML::Form
 	# This is because we expect all forms to have a hidden input with the form processing path.
 	# Also because we are the first general container that corresponds to a specific tag.
 	extend ::Magnets::HTML::Form::ClassInstance
-	
 	hidden_input_name = __hidden_input_for_form_route_input_name__
-	
 	encapsulation = ::CascadingConfiguration::Core::Encapsulation.encapsulation( :default )
-  
 	attr_hidden_input __hidden_input_for_form_route_binding_name__ do |hidden_input_instance|
 	  hidden_input_instance.name = hidden_input_name
 	  hidden_input_instance.__value__ = __route_string__

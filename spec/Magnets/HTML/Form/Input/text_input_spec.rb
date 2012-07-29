@@ -22,6 +22,16 @@ describe ::Magnets::HTML::Form::Input::TextInput do
     end
     
     ::Magnets::HTML::Form::Input::TextInput.new.instance_eval do
+
+      has_binding?( :input ).should == true
+      respond_to?( :input_view ).should == true
+      has_binding?( :value ).should == true
+      respond_to?( :value_view ).should == true
+      has_binding?( :label ).should == true
+      respond_to?( :label_view ).should == true
+      has_binding?( :error ).should == true
+      respond_to?( :error_view ).should == true
+
       label_view.for_input.should == input_view
       error_view.for_input.should == input_view
     end

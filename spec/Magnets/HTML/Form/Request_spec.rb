@@ -1,5 +1,5 @@
 
-require_relative '../../../lib/magnets-form.rb'
+require_relative '../../../../lib/magnets-html-form.rb'
 
 describe ::Magnets::HTML::Form::Request do
   

@@ -71,7 +71,6 @@ module ::Magnets::HTML::Form::Bindings::InstanceBinding
       
       hidden_binding_name = ::Magnets::HTML::Form.__hidden_input_for_form_route_binding_name__
       hidden_binding_instance = __bindings__[ hidden_binding_name ]
-      
       hidden_binding_node = hidden_binding_instance.to_html_node( document_frame, 
                                                                   view_rendering_empty )
       

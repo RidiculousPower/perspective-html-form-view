@@ -4,7 +4,7 @@ require_relative '../../../../lib/magnets-html-form.rb'
 describe ::Magnets::HTML::Form::Input do
   
   it 'packages HTML elements for automated use in a form' do
-    
+
     class ::Magnets::HTML::Form::Input::MockInput 
      
       include ::Magnets::HTML::Form::Input
@@ -23,7 +23,7 @@ describe ::Magnets::HTML::Form::Input do
       end
       
     end
-    
+
     ::Magnets::HTML::Form::Input::MockInput.new.instance_eval do
       label_view.for_input.should == input_view
       error_view.for_input.should == input_view

@@ -126,23 +126,23 @@ module ::Magnets::HTML::Form::Configuration
 	  #  pre_set_hook  #
 	  #================#
 
-	  def pre_set_hook( index, binding_instance, is_insert )
-      
-      case instance = configuration_instance
-        
-        when ::Magnets::HTML::Form::ClassInstance
-          
-          
-          
-        when ::Magnets::HTML::Form::ObjectInstance
-
-        when ::Magnets::Bindings::AttributeContainer::HTMLForm::ClassBinding
-
-        when ::Magnets::Bindings::AttributeContainer::HTMLForm::InstanceBinding
-        
-      end
-      
-    end
+	  #def pre_set_hook( index, binding_instance, is_insert )
+    #  
+    #  case instance = configuration_instance
+    #    
+    #    when ::Magnets::HTML::Form::ClassInstance
+    #      
+    #      
+    #      
+    #    when ::Magnets::HTML::Form::ObjectInstance
+    #
+    #    when ::Magnets::Bindings::AttributeContainer::HTMLForm::ClassBinding
+    #
+    #    when ::Magnets::Bindings::AttributeContainer::HTMLForm::InstanceBinding
+    #    
+    #  end
+    #  
+    #end
     
     #======================#
 	  #  child_pre_set_hook  #

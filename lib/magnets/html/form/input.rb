@@ -9,7 +9,7 @@ module ::Magnets::HTML::Form::Input
   cascade.extend( ::Magnets::HTML::Form::Input::ClassInstance )
 
   attr_text_or_number  :input, ::Magnets::HTML::Elements::Form::Input::TextInput
-  
+
   attr_alias           :name, input.name
 
   attr_alias           :value, input.value

@@ -29,7 +29,7 @@ module ::Magnets::HTML::Form::ObjectInstance
 
   # MFR for "Magnets Form Route"
   self.__hidden_input_for_form_route_input_name__   = '*MFR*'
-  self.__hidden_input_for_form_route_binding_name__ = '*MFR*'.to_sym
+  self.__hidden_input_for_form_route_binding_name__ = __hidden_input_for_form_route_input_name__.to_sym
   
   ###############################
   #  subform_container_tag      #
