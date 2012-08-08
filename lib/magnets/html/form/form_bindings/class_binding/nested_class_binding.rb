@@ -13,23 +13,33 @@ module ::Magnets::HTML::Form::Bindings::ClassBinding::NestedClassBinding
     
     super
     
-    __initialize_for_parent_binding__
+    __initialize_for_bound_container__
         
   end
 
-  #######################################
-  #  __initialize_for_parent_binding__  #
-  #######################################
+  ########################################
+  #  __initialize_for_bound_container__  #
+  ########################################
   
-  def __initialize_for_parent_binding__
+  def __initialize_for_bound_container__
 
-    this_parent_binding = self
+    # When a nested form class binding is created it needs to tell each parent container until the next
+    # parent form that the binding in question has a nested form:
+    #
+    #   F-V-...-NF => F needs to know about NF in V
+    #
+    # Form Bindings are only created for forms and form inputs.
+    #
     
-    this_last_parent = this_parent_binding
     
-    while this_parent_binding = this_parent_binding.__bound_container__
+    # Find the first parent form instance.
 
-      case this_parent_binding
+
+    this_last_parent = this_parent_container = self
+    
+    while this_parent_container = this_parent_container.__bound_container__
+
+      case this_parent_container
 
         when ::Magnets::Bindings::AttributeContainer::HTMLForm::ClassBinding
           
@@ -44,6 +54,7 @@ module ::Magnets::HTML::Form::Bindings::ClassBinding::NestedClassBinding
 
     end
     
+    # 
     unless nested?
 
       case container_class = this_last_parent.__bound_container_class__

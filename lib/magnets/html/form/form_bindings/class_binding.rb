@@ -15,15 +15,15 @@ module ::Magnets::HTML::Form::Bindings::ClassBinding
     
     super
     
-    __initialize_for_parent_form__
+    __initialize_for_bound_form__
         
   end
   
-  ####################################
-  #  __initialize_for_parent_form__  #
-  ####################################
+  ###################################
+  #  __initialize_for_bound_form__  #
+  ###################################
   
-  def __initialize_for_parent_form__
+  def __initialize_for_bound_form__
     
     case __container_class__
 

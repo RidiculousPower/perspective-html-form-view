@@ -2,8 +2,16 @@
 module ::Magnets::HTML::Form::ClassInstance
   
   include ::Magnets::HTML::Form::Configuration
+
+  # Form-enabled views need bindings that know how to account for indexing forms present
+  ::Magnets::Bindings::Attributes.define_container_type( :HTML_form_enabled_view, true, :HTML_view_model ) do
+
+    define_binding_type( :form, :view )
+
+  end
   
-  ::Magnets::Bindings::Attributes.define_container_type( :HTML_form, false, :HTML_view_model ) do
+  # Forms need to use form bindings
+  ::Magnets::Bindings::Attributes.define_container_type( :HTML_form, false, :HTML_form_enabled_view ) do
 
     # We only want our inputs to have form bindings - otherwise they behave just like normal views.
 

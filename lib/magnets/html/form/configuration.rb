@@ -4,83 +4,6 @@ module ::Magnets::HTML::Form::Configuration
   include ::CascadingConfiguration::Setting
   include ::CascadingConfiguration::Array::Unique
 
-  ################
-  #  action      #
-  #  __action__  #
-  ################
-
-  attr_configuration  :__action__
-
-  Controller.alias_module_and_instance_methods( :action, :__action__ )
-    
-  def __action__=( action_method_GET_or_POST )
-    
-    case action = action_method_GET_or_POST.upcase
-
-      when :GET, :POST
-
-        super( action )
-
-    end
-    
-  end
-  
-  alias_method( :action=, :__action__= )
-
-  self.__action__ = :POST
-
-  ###########
-  #  post!  #
-  #  POST!  #
-  ###########
-
-  def post!
-    
-    self.__action__ = :POST
-    
-  end
-  
-  alias_method( :POST!, :post! )
-
-  ##########
-  #  get!  #
-  #  GET!  #
-  ##########
-  
-  def get!
-    
-    self.__action__ = :GET
-
-  end
-
-  alias_method( :GET!, :get! )
-
-  ###########
-  #  post?  #
-  #  POST?  #
-  ###########
-
-  def post?
-    
-    return __action__ == :POST
-    
-  end
-  
-  alias_method( :POST?, :post? )
-
-  ##########
-  #  get?  #
-  #  GET?  #
-  ##########
-  
-  def get?
-    
-    return __action__ == :GET
-
-  end
-
-  alias_method( :GET?, :get? )
-
   #######################
   #  form_bindings      #
   #  __form_bindings__  #
@@ -105,6 +28,7 @@ module ::Magnets::HTML::Form::Configuration
       else
       
         child_instance = configuration_instance.__binding__( binding_instance.__name__ )
+
       end
       
 	    return child_instance
@@ -128,6 +52,8 @@ module ::Magnets::HTML::Form::Configuration
 
 	  #def pre_set_hook( index, binding_instance, is_insert )
     #  
+    #  child_instance = nil
+    #  
     #  case instance = configuration_instance
     #    
     #    when ::Magnets::HTML::Form::ClassInstance
@@ -142,6 +68,8 @@ module ::Magnets::HTML::Form::Configuration
     #    
     #  end
     #  
+    #  return child_instance
+    #  
     #end
     
     #======================#
@@ -150,9 +78,7 @@ module ::Magnets::HTML::Form::Configuration
 
 	  def child_pre_set_hook( index, binding_instance, is_insert )
 
-      child_instance = configuration_instance.__binding__( binding_name )
-
-	    return child_instance
+	    return configuration_instance.__binding__( binding_instance.__name__ )
 	    
 	  end
 	  
