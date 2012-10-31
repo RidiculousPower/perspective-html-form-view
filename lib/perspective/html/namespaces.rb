@@ -1,7 +1,9 @@
 
 module ::Perspective::HTML
 	module Form
-	  module Bindings
+	  module FormBinding
+    end
+    module InputBinding
     end
 		module ClassInstance
 		  module Bindings

@@ -4,14 +4,14 @@ module ::Perspective::HTML::Form::ClassInstance
   include ::Perspective::HTML::Form::Configuration
 
   # Form-enabled views need bindings that know how to account for indexing forms present
-  ::Perspective::Bindings::Attributes.define_container_type( :HTML_form_enabled_view, true, :HTML_view_model ) do
+  ::Perspective::Bindings::Attributes.define_container_type( :HTML_form, false, :HTML_view_model ) do
 
     define_binding_type( :form, :view )
 
   end
-  
+
   # Forms need to use form bindings
-  ::Perspective::Bindings::Attributes.define_container_type( :HTML_form, false, :HTML_form_enabled_view ) do
+  ::Perspective::Bindings::Attributes.define_container_type( :HTML_form_input, false, :HTML_view_model ) do
 
     # We only want our inputs to have form bindings - otherwise they behave just like normal views.
 
@@ -44,6 +44,6 @@ module ::Perspective::HTML::Form::ClassInstance
     
   end
   
-  include ::Perspective::Bindings::AttributeContainer::HTMLForm
+  include ::Perspective::Bindings::AttributeContainer::HTMLFormInput
   
 end

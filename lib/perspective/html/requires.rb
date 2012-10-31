@@ -33,12 +33,13 @@ files = [
 
   'context',
 
-  'form_bindings/class_binding',
-  'form_bindings/class_binding/nested_class_binding',
-  'form_bindings/instance_binding',
+  'input_binding/class_binding',
+  'input_binding/class_binding/nested_class_binding',
+  'input_binding/instance_binding',
 
-  'view_bindings/class_binding',
-  'view_bindings/instance_binding',
+  'form_binding/class_binding',
+  'form_binding/class_binding/nested_class_binding',
+  'form_binding/instance_binding',
   
   'class_instance',
   'object_instance',

@@ -29,7 +29,6 @@ module ::Perspective::HTML::Form::ObjectInstance
 
   # MFR for "Perspective Form Route"
   self.__hidden_input_for_form_route_input_name__   = '*MFR*'
-  self.__hidden_input_for_form_route_binding_name__ = __hidden_input_for_form_route_input_name__.to_sym
   
   ###############################
   #  subform_container_tag      #
@@ -175,6 +174,43 @@ module ::Perspective::HTML::Form::ObjectInstance
     __failure_procs__.each do |this_failure_proc|
       instance_exec( & this_failure_proc )
     end
+    
+  end
+  
+  ##################
+  #  to_html_node  #
+  ##################
+
+  def to_html_node( document_frame = nil, view_rendering_empty = @__view_rendering_empty__ )
+
+    if nested?
+      self.__container_tag__ = __subform_container_tag__
+    end
+    
+    self_as_html_node = super
+
+    unless nested?
+      hidden_binding_node = create_hidden_form_path_input( self_as_html_node.document_frame )
+      self_as_html_node.add_child( hidden_binding_node )
+    end
+    
+    return self_as_html_node
+    
+  end
+
+  ###################################
+  #  create_hidden_form_path_input  #
+  ###################################
+  
+  def create_hidden_form_path_input( document_frame )
+    
+    hidden_binding_node = ::Nokogiri::XML::Node.new( 'input', document_frame )
+
+    hidden_binding_node[ 'name' ] = ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__
+    hidden_binding_node[ 'type' ] = 'hidden'
+    hidden_binding_node[ 'value' ] = __route_string__.to_s
+    
+    return hidden_binding_node
     
   end
   

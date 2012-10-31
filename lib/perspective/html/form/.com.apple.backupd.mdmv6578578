@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DateStarted</key>
+	<date>2012-08-21T07:00:49Z</date>
+	<key>FileID</key>
+	<integer>6578578</integer>
+	<key>NameSpaceID</key>
+	<integer>2366373362</integer>
+	<key>NewPath</key>
+	<string>Users/asher/Projects/rp/perspective/perspective-html-form/lib/perspective/html/form/input_binding</string>
+	<key>SourcePath</key>
+	<string>Users/asher/Projects/rp/perspective/perspective-html-form/lib/perspective/html/form/form_bindings</string>
+</dict>
+</plist>

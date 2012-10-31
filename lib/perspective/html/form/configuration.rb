@@ -4,40 +4,24 @@ module ::Perspective::HTML::Form::Configuration
   include ::CascadingConfiguration::Setting
   include ::CascadingConfiguration::Array::Unique
 
-  #######################
-  #  form_bindings      #
-  #  __form_bindings__  #
-  #######################
+  #################
+  #  nested?      #
+  #  __nested__=  #
+  #################
 
-  attr_unique_array  :__form_bindings__ do
-    
-    #======================#
-	  #  child_pre_set_hook  #
-	  #======================#
+  attr_configuration :nested? => :__nested__=
+  
+  self.__nested__ = false
+  
+  #############
+  #  nested!  #
+  #############
 
-	  def child_pre_set_hook( index, binding_instance, is_insert )
-      
-      nested_route = configuration_instance.__nested_route__( binding_instance )
-      
-      if nested_route
+  def nested!
 
-        child_instance = ::Perspective::HTML::Form.form_binding_in_context( configuration_instance, 
-                                                                        nested_route,
-                                                                        binding_instance.__name__ )
-        
-      else
-      
-        child_instance = configuration_instance.__binding__( binding_instance.__name__ )
+    self.__nested__ = true
 
-      end
-      
-	    return child_instance
-	    
-	  end
-	  
   end
-
-  Controller.alias_module_and_instance_methods( :form_bindings, :__form_bindings__ )
 
   ########################
   #  input_bindings      #
@@ -46,37 +30,11 @@ module ::Perspective::HTML::Form::Configuration
 
   attr_unique_array  :__input_bindings__ do
     
-    #================#
-	  #  pre_set_hook  #
-	  #================#
-
-	  #def pre_set_hook( index, binding_instance, is_insert )
-    #  
-    #  child_instance = nil
-    #  
-    #  case instance = configuration_instance
-    #    
-    #    when ::Perspective::HTML::Form::ClassInstance
-    #      
-    #      
-    #      
-    #    when ::Perspective::HTML::Form::ObjectInstance
-    #
-    #    when ::Perspective::Bindings::AttributeContainer::HTMLForm::ClassBinding
-    #
-    #    when ::Perspective::Bindings::AttributeContainer::HTMLForm::InstanceBinding
-    #    
-    #  end
-    #  
-    #  return child_instance
-    #  
-    #end
-    
     #======================#
 	  #  child_pre_set_hook  #
 	  #======================#
 
-	  def child_pre_set_hook( index, binding_instance, is_insert )
+	  def child_pre_set_hook( index, binding_instance, is_insert, parent_hash )
 
 	    return configuration_instance.__binding__( binding_instance.__name__ )
 	    
@@ -86,35 +44,65 @@ module ::Perspective::HTML::Form::Configuration
 
   Controller.alias_module_and_instance_methods( :input_bindings, :__input_bindings__ )
 
-  ##############
-  #  validate  #
-  ##############
+  ##########################
+  #  subform_bindings      #
+  #  __subform_bindings__  #
+  ##########################
   
-  def validate( & validation_proc )
+  attr_unique_array  :__subform_bindings__ do
+
+    #======================#
+	  #  child_pre_set_hook  #
+	  #======================#
+
+	  def child_pre_set_hook( index, binding_instance, is_insert, parent_hash )
+
+	    return configuration_instance.__binding__( binding_instance.__name__ )
+	    
+	  end
+    
+  end
+
+  Controller.alias_module_and_instance_methods( :subform_bindings, :__subform_bindings__ )
+
+  ##################
+  #  validate      #
+  #  __validate__  #
+  ##################
+  
+  def __validate__( & validation_proc )
   
     __validation_procs__.push( validation_proc )
     
   end
 
-  #############
-  #  failure  #
-  #############
+  alias_method :validate, :__validate__
 
-  def failure( & failure_proc )
+  #################
+  #  failure      #
+  #  __failure__  #
+  #################
+
+  def __failure__( & failure_proc )
 
     __failure_procs__.push( failure_proc )
 
   end
-  
-  #############
-  #  success  #
-  #############
 
-  def success( & success_proc )
+  alias_method :failure, :__failure__
+  
+  #################
+  #  success      #
+  #  __success__  #
+  #################
+
+  def __success__( & success_proc )
 
     __success_procs__.push( success_proc )
 
   end
+
+  alias_method :success, :__success__
 
   ##########################
   #  __validation_procs__  #
@@ -139,25 +127,6 @@ module ::Perspective::HTML::Form::Configuration
   attr_unique_array  :__failure_procs__
 
   Controller.alias_module_and_instance_methods( :failure_procs, :__failure_procs__ )
-
-  #################
-  #  nested?      #
-  #  __nested__=  #
-  #################
-
-  attr_configuration :nested? => :__nested__=
-  
-  self.__nested__ = false
-  
-  #############
-  #  nested!  #
-  #############
-
-  def nested!
-
-    self.__nested__ = true
-
-  end
 
   #############################
   #  __process_form_values__  #
