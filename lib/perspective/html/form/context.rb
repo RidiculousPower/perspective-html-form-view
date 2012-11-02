@@ -9,8 +9,8 @@ module ::Perspective::HTML::Form::Context
         
     # we need to get the shared binding context from our root 
     form_binding = ::Perspective::Bindings.binding_in_context( binding_context, 
-                                                           binding_route,
-                                                           binding_name )
+                                                               binding_route,
+                                                               binding_name )
     
     case form_class = form_root_binding.__form_class__
       when ::Perspective::HTML::Form::ClassInstance

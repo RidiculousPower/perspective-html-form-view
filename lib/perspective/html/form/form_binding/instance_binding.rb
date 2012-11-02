@@ -2,10 +2,10 @@
 module ::Perspective::HTML::Form::FormBinding::InstanceBinding
 
   #########################
-  #  render_value_valid?  #
+  #  __render_value_valid__?  #
   #########################
 
-  def render_value_valid?( ensure_valid = false, view_rendering_empty = true )
+  def __render_value_valid__?( ensure_valid = false, view_rendering_empty = true )
 
     super
     

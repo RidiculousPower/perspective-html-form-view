@@ -28,7 +28,7 @@ module ::Perspective::HTML::Form::ObjectInstance
 	                           :__hidden_input_for_form_route_binding_name__
 
   # MFR for "Perspective Form Route"
-  self.__hidden_input_for_form_route_input_name__   = '*MFR*'
+  self.__hidden_input_for_form_route_input_name__   = '__Form__'
   
   ###############################
   #  subform_container_tag      #
@@ -47,11 +47,11 @@ module ::Perspective::HTML::Form::ObjectInstance
   #########################################
 	
   def __initialize_from_form_parameters__
-        
+
     # we have 'path-to-binding' => value
     # we want to turn it into path.to.binding = value
-    ::Perspective::Request.raw_parameters.each do |this_parameter_route_name, this_parameter_value|
-      
+    ::Perspective.request.raw_parameters.each do |this_parameter_route_name, this_parameter_value|
+
       # The current data validation context.
       this_context = self
       
@@ -63,15 +63,17 @@ module ::Perspective::HTML::Form::ObjectInstance
 
       while this_index = this_route_remainder.index( ::Perspective::Bindings::RouteDelimiter )
         
-        # slice off route part
+        # slice off route part up to delimiter
         this_route_part = this_route_remainder.slice( 0, this_index )
 
         # keep remainder
-        this_remainder_length = this_route_remainder.length - this_index - 1
-        this_route_remainder = this_route_remainder.slice( this_index + 1, this_remainder_length )
+        length_parsed = this_index + ::Perspective::Bindings::RouteDelimiter.length
+        this_remainder_length = this_route_remainder.length - length_parsed
+        remainder_slice_index = this_index + ::Perspective::Bindings::RouteDelimiter.length
+        this_route_remainder = this_route_remainder.slice( remainder_slice_index, this_remainder_length )
 
         # if we got badly formed parameter route name, skip to the next parameter
-        unless this_context = this_context.__binding__( this_route_part )
+        unless this_context = this_context.__binding__( this_route_part.to_sym )
           badly_formed_route = true
           break
         end
@@ -93,7 +95,9 @@ module ::Perspective::HTML::Form::ObjectInstance
       # last remaining part is binding name for input corresponding to value
       this_input_name = this_route_remainder
 
-      if this_input_binding_instance = this_context.__binding__( this_input_name )
+      if this_input_binding_instance = this_context.__binding__( this_input_name.to_sym )
+        puts 'assigning binding: ' + this_input_binding_instance.__route_print_string__.to_s
+        puts 'value: ' + this_parameter_value.inspect.to_s
         this_input_binding_instance.__value__ = this_parameter_value
       end
       
@@ -128,7 +132,7 @@ module ::Perspective::HTML::Form::ObjectInstance
     validates = true
     
     __input_bindings__.each do |this_input_binding|
-      unless this_input_binding.value_validates?
+      unless this_input_binding.__value_validates__?
         validates = false
       end
     end

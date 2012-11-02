@@ -3,37 +3,27 @@ module ::Perspective::HTML::Form::InputBinding::InstanceBinding
 
   include ::Perspective::HTML::Form::Configuration
 
-  ######################
-  #  value_validates?  #
-  ######################
+  ##########################
+  #  __value_validates__?  #
+  ##########################
 
-  def value_validates?( binding_value = @__value__ )
+  def __value_validates__?( binding_value = @__value__ )
     
     validates = false
     
-    if binding_value_valid?( binding_value )
-      validates = validation_procs_validate_value?
+    if __binding_value_valid__?( binding_value )
+      validates = __validation_procs_validate_value__?
     end
     
     return validates
     
   end
-
-  #########################
-  #  render_value_valid?  #
-  #########################
-
-  def render_value_valid?( ensure_valid = false, view_rendering_empty = true )
-
-    super
-    
-  end
   
-  ######################################
-  #  validation_procs_validate_value?  #
-  ######################################
+  ##########################################
+  #  __validation_procs_validate_value__?  #
+  ##########################################
 
-  def validation_procs_validate_value?( binding_value = @__value__ )
+  def __validation_procs_validate_value__?( binding_value = @__value__ )
 
     validates = false
 

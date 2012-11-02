@@ -112,6 +112,9 @@ describe ::Perspective::HTML::Form do
         html_node.children[3].children[3].children[2][ 'id' ].should == 'b::c::c_inputC'
         html_node.children[3].children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
 
+    html_node.children[4].name.should == 'input'
+    html_node.children[4][ 'name' ].should == ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__
+    
   end
 
   it 'adds form auto-processing' do
@@ -119,8 +122,25 @@ describe ::Perspective::HTML::Form do
     # simulate POST and ensure proper processing/validation
     
     ::Perspective.root = ::Perspective::HTML::Form::MockA
+
     mock_request = ::Rack::MockRequest.new( ::Perspective )
-    mock_response = mock_request.get( 'some/other/path' )
+    
+    delimiter = ::Perspective::Bindings::RouteDelimiter
+    
+    post_hash = { 'a_inputA' + delimiter + 'input'                                     => 'value_A',
+                  'a_inputB' + delimiter + 'input'                                     => 'value_B',
+                  'a_inputC' + delimiter + 'input'                                     => 'value_C',
+                  'b' + delimiter + 'b_inputA' + delimiter + 'input'                   => 'value_b_A',
+                  'b' + delimiter + 'b_inputB' + delimiter + 'input'                   => 'value_b_B',
+                  'b' + delimiter + 'b_inputC' + delimiter + 'input'                   => 'value_b_C',
+                  'b' + delimiter + 'c' + delimiter + 'c_inputA' + delimiter + 'input' => 'value_bc_A',
+                  'b' + delimiter + 'c' + delimiter + 'c_inputB' + delimiter + 'input' => 'value_bc_B',
+                  'b' + delimiter + 'c' + delimiter + 'c_inputC' + delimiter + 'input' => 'value_bc_C',
+                  ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__ => '' }
+
+    mock_response = mock_request.post( 'some/path', :params => post_hash )
+    ::Perspective.root_instance.a_inputA.input.__value__.should == 'value_A'
+    
     
   end
   
