@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::Context
+module ::Perspective::HTML::Form::View::Context
 
 	#############################
   #  form_binding_in_context  #

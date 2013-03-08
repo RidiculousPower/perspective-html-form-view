@@ -1,4 +1,8 @@
 
-module ::Perspective::Bindings::HTMLFormViewBindings::HiddenInput::ClassBinding
+module ::Perspective::Bindings::HTMLFormViewInputBindings::HiddenInput::ClassBinding
+
+  include ::Perspective::HTML::Form::View::Input
+
+  input.«view_class» = ::Perspective::HTML::Elements::Form::View::Input::HiddenInput
   
 end

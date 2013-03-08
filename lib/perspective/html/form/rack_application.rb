@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::RackApplication
+module ::Perspective::HTML::Form::View::RackApplication
   
   ##################################################################################################
       private ######################################################################################
@@ -13,7 +13,7 @@ module ::Perspective::HTML::Form::RackApplication
   def render_content
 
     # if we have POST or PUT with our hidden input route field, process form results
-    if @request.post? || @request.get?                                                       and 
+    if @request.post? || @request.get?                                                         and 
        form_route_key = ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route» and
        form_route_string = @request.raw_parameters.delete( form_route_key )
 
@@ -21,14 +21,8 @@ module ::Perspective::HTML::Form::RackApplication
       
     end
 
-  	case @status
-	    
-      when 200
+  	super if @status.equal?( 200 )
 
-  	    super
-
-    end
-    
     return @content
         
   end
@@ -50,13 +44,10 @@ module ::Perspective::HTML::Form::RackApplication
     # if we have neither form route nor binding name then a form was set as the root container
     
     if binding_name
-      form_instance = ::Perspective::HTML::Form.form_binding_in_context( root_instance,
-                                                                         form_route, 
-                                                                         binding_name )
+      form_instance = ::Perspective::HTML::Form.form_binding_in_context( root_instance, form_route, binding_name )
     else
       form_instance = root_instance
     end
-    
     
     form_instance.«initialize_from_form_parameters»
      

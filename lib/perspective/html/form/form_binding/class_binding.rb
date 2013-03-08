@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::FormBinding::ClassBinding
+module ::Perspective::HTML::Form::View::FormBinding::ClassBinding
 
   include ::Perspective::HTML::Form::Configuration
 
@@ -8,11 +8,7 @@ module ::Perspective::HTML::Form::FormBinding::ClassBinding
   #  initialize  #
   ################
 
-  def initialize( bound_container, 
-                  binding_name,
-                  container_class = nil, 
-                  ancestor_binding = nil,
-                  & configuration_proc )
+  def initialize( *args, & configuration_proc )
     
     super
 

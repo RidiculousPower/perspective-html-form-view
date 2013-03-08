@@ -15,10 +15,10 @@ describe ::Perspective::HTML::Form do
       end
       # now we need input methods defined separately
       c_inputA.has_binding?( :input ).should == true
-      attr_text_input :c_inputB, ::Perspective::HTML::Form::Input::TextInput do
+      attr_text_input :c_inputB, ::Perspective::HTML::Form::View::Input::TextInput do
         c_inputB.view.label.«value» = 'C - Input B:'
       end
-      attr_text_input :c_inputC, ::Perspective::HTML::Form::Input::TextInput do
+      attr_text_input :c_inputC, ::Perspective::HTML::Form::View::Input::TextInput do
         c_inputC.view.label.«value» = 'C - Input C:'
       end
       attr_order :c_inputA, :c_inputB, :c_inputC
@@ -71,15 +71,15 @@ describe ::Perspective::HTML::Form do
 
     html_node.children[0].name.should == 'div'
     html_node.children[0][ 'id' ].should == 'a_inputA'
-    html_node.children[0][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+    html_node.children[0][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
     html_node.children[1].name.should == 'div'
     html_node.children[1][ 'id' ].should == 'a_inputB'
-    html_node.children[1][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+    html_node.children[1][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
     html_node.children[2].name.should == 'div'
     html_node.children[2][ 'id' ].should == 'a_inputC'
-    html_node.children[2][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+    html_node.children[2][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
     html_node.children[3].name.should == 'div'
     html_node.children[3][ 'id' ].should == 'b'
@@ -87,15 +87,15 @@ describe ::Perspective::HTML::Form do
 
       html_node.children[3].children[0].name.should == 'div'
       html_node.children[3].children[0][ 'id' ].should == 'b::b_inputA'
-      html_node.children[3].children[0][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+      html_node.children[3].children[0][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
       html_node.children[3].children[1].name.should == 'div'
       html_node.children[3].children[1][ 'id' ].should == 'b::b_inputB'
-      html_node.children[3].children[1][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+      html_node.children[3].children[1][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
       html_node.children[3].children[2].name.should == 'div'
       html_node.children[3].children[2][ 'id' ].should == 'b::b_inputC'
-      html_node.children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+      html_node.children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
       html_node.children[3].children[3].name.should == 'div'
       html_node.children[3].children[3][ 'id' ].should == 'b::c'
@@ -103,15 +103,15 @@ describe ::Perspective::HTML::Form do
 
         html_node.children[3].children[3].children[0].name.should == 'div'
         html_node.children[3].children[3].children[0][ 'id' ].should == 'b::c::c_inputA'
-        html_node.children[3].children[3].children[0][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+        html_node.children[3].children[3].children[0][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
         html_node.children[3].children[3].children[1].name.should == 'div'
         html_node.children[3].children[3].children[1][ 'id' ].should == 'b::c::c_inputB'
-        html_node.children[3].children[3].children[1][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+        html_node.children[3].children[3].children[1][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
         html_node.children[3].children[3].children[2].name.should == 'div'
         html_node.children[3].children[3].children[2][ 'id' ].should == 'b::c::c_inputC'
-        html_node.children[3].children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
+        html_node.children[3].children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
     html_node.children[4].name.should == 'input'
     html_node.children[4][ 'name' ].should == ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route»

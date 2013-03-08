@@ -2,13 +2,13 @@
 
 require_relative '../../../../lib/perspective/html/form.rb'
 
-describe ::Perspective::HTML::Form::Input do
+describe ::Perspective::HTML::Form::View::Input do
   
   it 'packages HTML elements for automated use in a form' do
 
-    class ::Perspective::HTML::Form::Input::MockInput 
+    class ::Perspective::HTML::Form::View::Input::MockInput 
      
-      include ::Perspective::HTML::Form::Input
+      include ::Perspective::HTML::Form::View::Input
       
       has_binding?( :input ).should == true
       has_binding?( :value ).should == true
@@ -21,7 +21,7 @@ describe ::Perspective::HTML::Form::Input do
       
     end
 
-    ::Perspective::HTML::Form::Input::MockInput.new.instance_eval do
+    ::Perspective::HTML::Form::View::Input::MockInput.new.instance_eval do
       label.text = 'Generic Input'
       html_node = to_html_node
       html_node.children[2][ 'name' ].should == 'path-to-generic_input'

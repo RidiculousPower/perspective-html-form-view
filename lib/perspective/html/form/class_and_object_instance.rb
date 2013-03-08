@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::SingletonAndObjectInstance
+module ::Perspective::HTML::Form::View::SingletonAndObjectInstance
 
   ##############
   #  «action»  #
@@ -12,9 +12,9 @@ module ::Perspective::HTML::Form::SingletonAndObjectInstance
   #  «action»=  #
   ###############
   
-  def «action»=( action_method_GET_or_POST )
+  def «action»=( get_or_post )
     
-    case action = action_method_GET_or_POST.upcase
+    case action = get_or_post.upcase
 
       when :GET, :POST
 
@@ -37,9 +37,9 @@ module ::Perspective::HTML::Form::SingletonAndObjectInstance
   Controller.alias_module_and_instance_methods( :action=, :«action»= )  
   alias_method( :action=, :«action»= )
 
-  ##############################
-  #  «action» Default Setting  #
-  ##############################
+  ######################
+  #  «action» Default  #
+  ######################
 
   self.«action» = :POST
 

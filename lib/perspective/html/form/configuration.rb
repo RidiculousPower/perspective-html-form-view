@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::Configuration
+module ::Perspective::HTML::Form::View::Configuration
   
   include ::CascadingConfiguration::Setting
   include ::CascadingConfiguration::Array::Unique

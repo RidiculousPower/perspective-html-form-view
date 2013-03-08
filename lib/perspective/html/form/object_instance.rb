@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::ObjectInstance
+module ::Perspective::HTML::Form::View::ObjectInstance
   
   include ::Perspective::HTML::View::ObjectInstance
   
@@ -23,12 +23,16 @@ module ::Perspective::HTML::Form::ObjectInstance
 	# 
 	attr_singleton_configuration  :«input_name_for_hidden_input_for_form_route»
 
-  # MFR for "Perspective Form Route"
+  ##########################################################
+  #  «input_name_for_hidden_input_for_form_route» Default  #
+  ##########################################################
+
   self.«input_name_for_hidden_input_for_form_route»   = '«Form»'
   
-  #############################
-  #  «subform_container_tag»  #
-  #############################
+  ##############################
+  #  «subform_container_tag»   #
+  #  «subform_container_tag»=  #
+  ##############################
 
 	attr_configuration  :«subform_container_tag»
 
@@ -38,9 +42,15 @@ module ::Perspective::HTML::Form::ObjectInstance
 
   Controller.alias_module_and_instance_methods( :subform_container_tag, :«subform_container_tag» )
 
-  #########################################
-  #  «subform_container_tag» Default Tag  #
-  #########################################
+  ############################
+  #  subform_container_tag=  #
+  ############################
+
+  Controller.alias_module_and_instance_methods( :subform_container_tag=, :«subform_container_tag»= )
+
+  #####################################
+  #  «subform_container_tag» Default  #
+  #####################################
 
   self.«subform_container_tag» = :div
   

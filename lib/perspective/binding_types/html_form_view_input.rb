@@ -4,7 +4,7 @@
 
   # We only want our inputs to have form bindings - otherwise they behave just like normal views.
 
-  base = ::Perspective::HTML::Form::Input
+  base = ::Perspective::HTML::Form::View::Input
   
   define_binding_type( :button_input ).«view_class» = base::ButtonInput
   define_binding_type( :checkbox_input ).«view_class» = base::CheckboxInput

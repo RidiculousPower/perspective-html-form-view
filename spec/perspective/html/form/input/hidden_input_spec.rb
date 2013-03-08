@@ -2,23 +2,23 @@
 
 require_relative '../../../../../lib/perspective/html/form.rb'
 
-describe ::Perspective::HTML::Form::Input::HiddenInput do
+describe ::Perspective::HTML::Form::View::Input::HiddenInput do
 
   
   it 'packages HTML elements for automated use in a form' do
     
-    class ::Perspective::HTML::Form::Input::HiddenInput 
+    class ::Perspective::HTML::Form::View::Input::HiddenInput 
      
       has_binding?( :input ).should == true
       has_binding?( :value ).should == true
       has_binding?( :label ).should == true
       has_binding?( :error ).should == true
       
-      input.«view_class».should == ::Perspective::HTML::Elements::Form::Input::HiddenInput 
+      input.«view_class».should == ::Perspective::HTML::Elements::Form::View::Input::HiddenInput 
      
     end
     
-    ::Perspective::HTML::Form::Input::HiddenInput.new.instance_eval do
+    ::Perspective::HTML::Form::View::Input::HiddenInput.new.instance_eval do
       label_view.for_input.should == input_view
       error_view.for_input.should == input_view
     end

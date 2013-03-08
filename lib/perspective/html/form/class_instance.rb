@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::SingletonInstance
+module ::Perspective::HTML::Form::View::SingletonInstance
   
-  include ::Perspective::HTML::Form::Configuration
+  include ::Perspective::HTML::Form::View::Configuration
 
 
   
