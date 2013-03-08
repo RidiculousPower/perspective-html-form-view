@@ -1,16 +1,18 @@
+# -*- encoding : utf-8 -*-
 
-module ::Perspective::HTML::Form::ClassAndObjectInstance
+module ::Perspective::HTML::Form::SingletonAndObjectInstance
 
-  ################
-  #  action      #
-  #  __action__  #
-  ################
+  ##############
+  #  «action»  #
+  ##############
 
-  attr_configuration  :__action__
+  attr_configuration  :«action»
 
-  Controller.alias_module_and_instance_methods( :action, :__action__ )
-    
-  def __action__=( action_method_GET_or_POST )
+  ###############
+  #  «action»=  #
+  ###############
+  
+  def «action»=( action_method_GET_or_POST )
     
     case action = action_method_GET_or_POST.upcase
 
@@ -21,60 +23,87 @@ module ::Perspective::HTML::Form::ClassAndObjectInstance
     end
     
   end
-  
-  alias_method( :action=, :__action__= )
 
-  self.__action__ = :POST
+  ############
+  #  action  #
+  ############
+  
+  Controller.alias_module_and_instance_methods( :action, :«action» )
+
+  #############
+  #  action=  #
+  #############
+    
+  Controller.alias_module_and_instance_methods( :action=, :«action»= )  
+  alias_method( :action=, :«action»= )
+
+  ##############################
+  #  «action» Default Setting  #
+  ##############################
+
+  self.«action» = :POST
 
   ###########
   #  post!  #
-  #  POST!  #
   ###########
 
   def post!
     
-    self.__action__ = :POST
+    self.«action» = :POST
     
   end
   
+  ###########
+  #  POST!  #
+  ###########
+
   alias_method( :POST!, :post! )
 
   ##########
   #  get!  #
-  #  GET!  #
   ##########
   
   def get!
     
-    self.__action__ = :GET
+    self.«action» = :GET
 
   end
+
+  ##########
+  #  GET!  #
+  ##########
 
   alias_method( :GET!, :get! )
 
   ###########
   #  post?  #
-  #  POST?  #
   ###########
 
   def post?
     
-    return __action__ == :POST
+    return «action» == :POST
     
   end
   
+  ###########
+  #  POST?  #
+  ###########
+
   alias_method( :POST?, :post? )
 
   ##########
   #  get?  #
-  #  GET?  #
   ##########
   
   def get?
     
-    return __action__ == :GET
+    return «action» == :GET
 
   end
+
+  ##########
+  #  GET?  #
+  ##########
 
   alias_method( :GET?, :get? )
   

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML::Form::FormBinding::ClassBinding
 
@@ -15,15 +16,15 @@ module ::Perspective::HTML::Form::FormBinding::ClassBinding
     
     super
 
-    __initialize_for_bound_container__
-        
+    «initialize_for_bound_container»
+  
   end
 
-  ########################################
-  #  __initialize_for_bound_container__  #
-  ########################################
+  ######################################
+  #  «initialize_for_bound_container»  #
+  ######################################
   
-  def __initialize_for_bound_container__
+  def «initialize_for_bound_container»
 
     # When a nested class binding is created it needs to check parent bound containers
     # to determine whether binding is nested inside a form.
@@ -37,19 +38,19 @@ module ::Perspective::HTML::Form::FormBinding::ClassBinding
 
     this_parent_container = self
     
-    while this_parent_container = this_parent_container.__bound_container__
+    while this_parent_container = this_parent_container.«bound_container»
 
       case this_parent_container
         
         # We get to a form class instance if the form is the root,
         # or to a form binding if form is bound to another view.
-        when ::Perspective::HTML::Form::ClassInstance, 
-             ::Perspective::Bindings::AttributeContainer::HTMLForm::ClassBinding
+        when ::Perspective::HTML::Form::SingletonInstance, 
+             ::Perspective::Bindings::BindingTypeContainer::HTMLForm::ClassBinding
 
            # binding needs nested support
           nested!
-          this_parent_container.__subform_bindings__.push( self )
-          @__parent_form_or_form_binding__ = this_parent_container
+          this_parent_container.«subform_bindings».push( self )
+          @«parent_form_or_form_binding» = this_parent_container
           break
 
       end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML::Form::ObjectInstance
   
@@ -6,16 +7,12 @@ module ::Perspective::HTML::Form::ObjectInstance
   include ::Perspective::HTML::Form::Configuration
 
   include ::CascadingConfiguration::Setting
-
-	# Unlike other containers, in this case we actually need to be a Form to start.
-	# This is because we expect all forms to have a hidden input with the form processing path.
-	extend ::Perspective::HTML::Form::ClassInstance
   
-  ####################################################
-  #  __hidden_input_for_form_route_input_name__      #
-  #  __alternate_hidden_input_for_form_route_name__  #
-  #  __hidden_input_for_form_route_binding_name__    #
-  ####################################################
+  self.«container_tag» = :form
+
+  ##################################################
+  #  «input_name_for_hidden_input_for_form_route»  #
+  ##################################################
 
   # We need to be able to identify the form binding route from other form inputs.
 	# Since we want to be able to redraw the form without first reloading a url we don't want
@@ -24,29 +21,34 @@ module ::Perspective::HTML::Form::ObjectInstance
 	#
 	# We want the name to be unique and preferably short, since it will appear in GET strings.
 	# 
-	attr_module_configuration  :__hidden_input_for_form_route_input_name__, 
-	                           :__hidden_input_for_form_route_binding_name__
+	attr_singleton_configuration  :«input_name_for_hidden_input_for_form_route»
 
   # MFR for "Perspective Form Route"
-  self.__hidden_input_for_form_route_input_name__   = '__Form__'
+  self.«input_name_for_hidden_input_for_form_route»   = '«Form»'
   
-  ###############################
-  #  subform_container_tag      #
-  #  __subform_container_tag__  #
-  ###############################
+  #############################
+  #  «subform_container_tag»  #
+  #############################
 
-	attr_configuration  :__subform_container_tag__
+	attr_configuration  :«subform_container_tag»
 
-  Controller.alias_module_and_instance_methods( :subform_container_tag, :__subform_container_tag__ )
+  ###########################
+  #  subform_container_tag  #
+  ###########################
 
-  self.__container_tag__ = :form
-  self.__subform_container_tag__ = :div
+  Controller.alias_module_and_instance_methods( :subform_container_tag, :«subform_container_tag» )
+
+  #########################################
+  #  «subform_container_tag» Default Tag  #
+  #########################################
+
+  self.«subform_container_tag» = :div
   
-  #########################################
-	#  __initialize_from_form_parameters__  #
-  #########################################
+  #######################################
+	#  «initialize_from_form_parameters»  #
+  #######################################
 	
-  def __initialize_from_form_parameters__
+  def «initialize_from_form_parameters»
 
     # we have 'path-to-binding' => value
     # we want to turn it into path.to.binding = value
@@ -62,30 +64,25 @@ module ::Perspective::HTML::Form::ObjectInstance
       badly_formed_route = false
 
       while this_index = this_route_remainder.index( ::Perspective::Bindings::RouteDelimiter )
-        
         # slice off route part up to delimiter
         this_route_part = this_route_remainder.slice( 0, this_index )
-
         # keep remainder
-        length_parsed = this_index + ::Perspective::Bindings::RouteDelimiter.length
+        length_parsed = this_index + ::Perspective::Bindings::RouteDelimiterLength
         this_remainder_length = this_route_remainder.length - length_parsed
-        remainder_slice_index = this_index + ::Perspective::Bindings::RouteDelimiter.length
+        remainder_slice_index = this_index + ::Perspective::Bindings::RouteDelimiterLength
         this_route_remainder = this_route_remainder.slice( remainder_slice_index, this_remainder_length )
-
         # if we got badly formed parameter route name, skip to the next parameter
-        unless this_context = this_context.__binding__( this_route_part.to_sym )
+        unless this_context = this_context.«binding»( this_route_part )
           badly_formed_route = true
           break
         end
-        
       end
       
       # If we got badly formed parameter input name, skip to the next parameter.
       # 
-      # We don't want to allow someone to break the route and try the next route part
-      # as an input on the broken element.
-      # For instance if we have /path/to/route and "to" is a badly formed route, "route"
-      # could end up getting called on "path" as an assignment value.
+      # We don't want to allow someone to break the route and try the next route part as an input on the broken element.
+      # For instance if we have /path/to/route and "to" is a badly formed route, "route" could end up getting called 
+      # on "path" as an assignment value.
       #
       if badly_formed_route
         badly_formed_route = false
@@ -95,10 +92,8 @@ module ::Perspective::HTML::Form::ObjectInstance
       # last remaining part is binding name for input corresponding to value
       this_input_name = this_route_remainder
 
-      if this_input_binding_instance = this_context.__binding__( this_input_name.to_sym )
-        puts 'assigning binding: ' + this_input_binding_instance.__route_print_string__.to_s
-        puts 'value: ' + this_parameter_value.inspect.to_s
-        this_input_binding_instance.__value__ = this_parameter_value
+      if this_input_binding_instance = this_context.«binding»( this_input_name )
+        this_input_binding_instance.«value» = this_parameter_value
       end
       
     end
@@ -115,9 +110,7 @@ module ::Perspective::HTML::Form::ObjectInstance
     
     validates = false
     
-    if validates = inputs_validate?
-      validates = validation_procs_validate?
-    end
+    validates = validation_procs_validate? if inputs_validate?
     
     return validates
     
@@ -131,11 +124,7 @@ module ::Perspective::HTML::Form::ObjectInstance
     
     validates = true
     
-    __input_bindings__.each do |this_input_binding|
-      unless this_input_binding.__value_validates__?
-        validates = false
-      end
-    end
+    «input_bindings».each { |this_input_binding| validates = false unless this_input_binding.value_validates? }
     
     return validates
     
@@ -149,9 +138,7 @@ module ::Perspective::HTML::Form::ObjectInstance
 
     validates = false
 
-		__validation_procs__.each do |this_validation_proc|
-		  break unless validates = instance_exec( & this_validation_proc )
-    end
+		«validation_procs».each { |this_validation_proc| break unless validates = instance_exec( & this_validation_proc ) }
     
     return validates
 
@@ -163,9 +150,7 @@ module ::Perspective::HTML::Form::ObjectInstance
 
   def success!
 
-    __success_procs__.each do |this_success_proc|
-      instance_exec( & this_success_proc )
-    end
+    «success_procs».each { |this_success_proc| instance_exec( & this_success_proc ) }
 
   end
   
@@ -175,9 +160,7 @@ module ::Perspective::HTML::Form::ObjectInstance
   
   def failure!
 
-    __failure_procs__.each do |this_failure_proc|
-      instance_exec( & this_failure_proc )
-    end
+    «failure_procs».each { |this_failure_proc| instance_exec( & this_failure_proc ) }
     
   end
   
@@ -185,16 +168,14 @@ module ::Perspective::HTML::Form::ObjectInstance
   #  to_html_node  #
   ##################
 
-  def to_html_node( document_frame = nil, view_rendering_empty = @__view_rendering_empty__ )
+  def to_html_node( document = «initialize_document», view_rendering_empty = @«view_rendering_empty» )
 
-    if nested?
-      self.__container_tag__ = __subform_container_tag__
-    end
+    self.«container_tag» = «subform_container_tag» if nested?
     
     self_as_html_node = super
 
     unless nested?
-      hidden_binding_node = create_hidden_form_path_input( self_as_html_node.document_frame )
+      hidden_binding_node = «create_hidden_form_path_input»( self_as_html_node.document )
       self_as_html_node.add_child( hidden_binding_node )
     end
     
@@ -202,17 +183,17 @@ module ::Perspective::HTML::Form::ObjectInstance
     
   end
 
-  ###################################
-  #  create_hidden_form_path_input  #
-  ###################################
+  #####################################
+  #  «create_hidden_form_path_input»  #
+  #####################################
   
-  def create_hidden_form_path_input( document_frame )
+  def «create_hidden_form_path_input»( document )
     
-    hidden_binding_node = ::Nokogiri::XML::Node.new( 'input', document_frame )
+    hidden_binding_node = ::Nokogiri::XML::Node.new( 'input', document )
 
-    hidden_binding_node[ 'name' ] = ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__
+    hidden_binding_node[ 'name' ] = ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route»
     hidden_binding_node[ 'type' ] = 'hidden'
-    hidden_binding_node[ 'value' ] = __route_string__.to_s
+    hidden_binding_node[ 'value' ] = «route_string».to_s
     
     return hidden_binding_node
     

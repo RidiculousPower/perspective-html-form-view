@@ -1,17 +1,18 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML::Form::Configuration
   
   include ::CascadingConfiguration::Setting
   include ::CascadingConfiguration::Array::Unique
 
-  #################
-  #  nested?      #
-  #  __nested__=  #
-  #################
+  #############
+  #  nested?  #
+  #  nested=  #
+  #############
 
-  attr_configuration :nested? => :__nested__=
+  attr_configuration :nested? => :nested=
   
-  self.__nested__ = false
+  self.nested = false
   
   #############
   #  nested!  #
@@ -19,16 +20,15 @@ module ::Perspective::HTML::Form::Configuration
 
   def nested!
 
-    self.__nested__ = true
+    self.«nested» = true
 
   end
 
-  ########################
-  #  input_bindings      #
-  #  __input_bindings__  #
-  ########################
+  ######################
+  #  «input_bindings»  #
+  ######################
 
-  attr_unique_array  :__input_bindings__ do
+  attr_unique_array  :«input_bindings» do
     
     #======================#
 	  #  child_pre_set_hook  #
@@ -36,20 +36,23 @@ module ::Perspective::HTML::Form::Configuration
 
 	  def child_pre_set_hook( index, binding_instance, is_insert, parent_hash )
 
-	    return configuration_instance.__binding__( binding_instance.__name__ )
+	    return configuration_instance.«binding»( binding_instance.«name» )
 	    
 	  end
 	  
   end
 
-  Controller.alias_module_and_instance_methods( :input_bindings, :__input_bindings__ )
+  ####################
+  #  input_bindings  #
+  ####################
 
-  ##########################
-  #  subform_bindings      #
-  #  __subform_bindings__  #
-  ##########################
+  Controller.alias_module_and_instance_methods( :input_bindings, :«input_bindings» )
+
+  ########################
+  #  «subform_bindings»  #
+  ########################
   
-  attr_unique_array  :__subform_bindings__ do
+  attr_unique_array  :«subform_bindings» do
 
     #======================#
 	  #  child_pre_set_hook  #
@@ -57,95 +60,104 @@ module ::Perspective::HTML::Form::Configuration
 
 	  def child_pre_set_hook( index, binding_instance, is_insert, parent_hash )
 
-	    return configuration_instance.__binding__( binding_instance.__name__ )
+	    return configuration_instance.«binding»( binding_instance.«name» )
 	    
 	  end
     
   end
 
-  Controller.alias_module_and_instance_methods( :subform_bindings, :__subform_bindings__ )
+  ######################
+  #  subform_bindings  #
+  ######################
 
-  ##################
-  #  validate      #
-  #  __validate__  #
-  ##################
+  Controller.alias_module_and_instance_methods( :subform_bindings, :«subform_bindings» )
+
+  ################
+  #  «validate»  #
+  ################
   
-  def __validate__( & validation_proc )
+  def «validate»( & validation_proc )
   
-    __validation_procs__.push( validation_proc )
+    «validation_procs».push( validation_proc )
     
   end
 
-  alias_method :validate, :__validate__
+  ##############
+  #  validate  #
+  ##############
 
-  #################
-  #  failure      #
-  #  __failure__  #
-  #################
+  alias_method :validate, :«validate»
 
-  def __failure__( & failure_proc )
+  ###############
+  #  «failure»  #
+  ###############
 
-    __failure_procs__.push( failure_proc )
+  def «failure»( & failure_proc )
 
-  end
-
-  alias_method :failure, :__failure__
-  
-  #################
-  #  success      #
-  #  __success__  #
-  #################
-
-  def __success__( & success_proc )
-
-    __success_procs__.push( success_proc )
+    «failure_procs».push( failure_proc )
 
   end
 
-  alias_method :success, :__success__
+  #############
+  #  failure  #
+  #############
 
-  ##########################
-  #  __validation_procs__  #
-  ##########################
+  alias_method :failure, :«failure»
+  
+  ###############
+  #  «success»  #
+  ###############
 
-  attr_unique_array  :__validation_procs__
+  def «success»( & success_proc )
 
-  Controller.alias_module_and_instance_methods( :validation_procs, :__validation_procs__ )
+    «success_procs».push( success_proc )
 
-  #######################
-  #  __success_procs__  #
-  #######################
+  end
 
-  attr_unique_array  :__success_procs__
+  #############
+  #  success  #
+  #############
 
-  Controller.alias_module_and_instance_methods( :success_procs, :__success_procs__ )
+  alias_method :success, :«success»
+
+  ########################
+  #  «validation_procs»  #
+  ########################
+
+  attr_unique_array  :«validation_procs» 
+
+  ######################
+  #  validation_procs  #
+  ######################
+
+  Controller.alias_module_and_instance_methods( :validation_procs, :«validation_procs»  )
+
+  #####################
+  #  «success_procs»  #
+  #####################
+
+  attr_unique_array  :«success_procs»
+
+  Controller.alias_module_and_instance_methods( :success_procs, :«success_procs» )
   
   #######################
-  #  __failure_procs__  #
+  #  «failure_procs»  #
   #######################
 
-  attr_unique_array  :__failure_procs__
+  attr_unique_array  :«failure_procs»
 
-  Controller.alias_module_and_instance_methods( :failure_procs, :__failure_procs__ )
+  Controller.alias_module_and_instance_methods( :failure_procs, :«failure_procs» )
 
   #############################
-  #  __process_form_values__  #
+  #  «process_form_values»  #
   #############################
 
-  def __process_form_values__
+  def «process_form_values»
     
     validates = false
     
     # validate inputs, then call form-level validation procs
-    if validates = __validate_form_values__
-      
-      __call_success_procs__
-      
-    else
-
-      __call_failure_procs__
-      
-    end
+    ( validates = «validate_form_values» ) ? «call_success_procs» : «call_failure_procs»
 
     return validates
     

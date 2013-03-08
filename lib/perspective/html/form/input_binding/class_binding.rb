@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML::Form::InputBinding::ClassBinding
 
@@ -13,7 +14,7 @@ module ::Perspective::HTML::Form::InputBinding::ClassBinding
     
     super
 
-    __bound_container__.__input_bindings__.push( self )
+    «bound_container».«input_bindings».push( self )
         
   end
   

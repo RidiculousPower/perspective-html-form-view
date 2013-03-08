@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 require_relative '../../../lib/perspective/html/form.rb'
 
@@ -10,15 +11,15 @@ describe ::Perspective::HTML::Form do
     class ::Perspective::HTML::Form::MockC
       include ::Perspective::HTML::Form
       attr_text_input :c_inputA do
-        c_inputA.view.label.value = 'C - Input A:'
+        c_inputA.view.label.«value» = 'C - Input A:'
       end
       # now we need input methods defined separately
       c_inputA.has_binding?( :input ).should == true
       attr_text_input :c_inputB, ::Perspective::HTML::Form::Input::TextInput do
-        c_inputB.view.label.value = 'C - Input B:'
+        c_inputB.view.label.«value» = 'C - Input B:'
       end
       attr_text_input :c_inputC, ::Perspective::HTML::Form::Input::TextInput do
-        c_inputC.view.label.value = 'C - Input C:'
+        c_inputC.view.label.«value» = 'C - Input C:'
       end
       attr_order :c_inputA, :c_inputB, :c_inputC
     end
@@ -26,13 +27,13 @@ describe ::Perspective::HTML::Form do
       include ::Perspective::HTML::Form
       attr_form    :c, ::Perspective::HTML::Form::MockC
       attr_text_input :b_inputA do
-        b_inputA.view.label.value = 'B - Input A:'
+        b_inputA.view.label.«value» = 'B - Input A:'
       end
       attr_text_input :b_inputB do
-        b_inputB.view.label.value = 'B - Input B:'
+        b_inputB.view.label.«value» = 'B - Input B:'
       end
       attr_text_input :b_inputC do
-        b_inputC.view.label.value = 'B - Input C:'
+        b_inputC.view.label.«value» = 'B - Input C:'
       end
       attr_order :b_inputA, :b_inputB, :b_inputC, :c
     end
@@ -40,13 +41,13 @@ describe ::Perspective::HTML::Form do
       include ::Perspective::HTML::Form
       attr_form    :b, ::Perspective::HTML::Form::MockB
       attr_text_input :a_inputA do
-        a_inputA.view.label.value = 'A - Input A:'
+        a_inputA.view.label.«value» = 'A - Input A:'
       end
       attr_text_input :a_inputB do
-        a_inputB.view.label.value = 'A - Input B:'
+        a_inputB.view.label.«value» = 'A - Input B:'
       end
       attr_text_input :a_inputC do
-        a_inputC.view.label.value = 'A - Input C:'
+        a_inputC.view.label.«value» = 'A - Input C:'
       end
       attr_order :a_inputA, :a_inputB, :a_inputC, :b
     end
@@ -113,7 +114,7 @@ describe ::Perspective::HTML::Form do
         html_node.children[3].children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::Input::TextInput'
 
     html_node.children[4].name.should == 'input'
-    html_node.children[4][ 'name' ].should == ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__
+    html_node.children[4][ 'name' ].should == ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route»
     
   end
 
@@ -136,10 +137,17 @@ describe ::Perspective::HTML::Form do
                   'b' + delimiter + 'c' + delimiter + 'c_inputA' + delimiter + 'input' => 'value_bc_A',
                   'b' + delimiter + 'c' + delimiter + 'c_inputB' + delimiter + 'input' => 'value_bc_B',
                   'b' + delimiter + 'c' + delimiter + 'c_inputC' + delimiter + 'input' => 'value_bc_C',
-                  ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__ => '' }
+                  ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route» => '' }
 
     mock_response = mock_request.post( 'some/path', :params => post_hash )
-    ::Perspective.root_instance.a_inputA.input.__value__.should == 'value_A'
+    
+    processed_form = ::Perspective.root_instance
+    
+    processed_form.a_inputA.input.should == 'value_A'
+
+    # we want:
+#    puts 'owner: ' + processed_form.a_inputA.«method»( :«value» ).owner.to_s
+    processed_form.a_inputA.should == 'value_A'
     
     
   end

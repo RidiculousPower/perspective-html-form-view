@@ -1,38 +1,45 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML::Form::InputBinding::InstanceBinding
 
   include ::Perspective::HTML::Form::Configuration
 
-  ##########################
-  #  __value_validates__?  #
-  ##########################
+  ######################
+  #  value_validates?  #
+  ######################
 
-  def __value_validates__?( binding_value = @__value__ )
+  def value_validates?( binding_value = «value» )
     
     validates = false
     
-    if __binding_value_valid__?( binding_value )
-      validates = __validation_procs_validate_value__?
+    if binding_value_valid?( binding_value )
+  		«validation_procs».each do |this_validation_proc|
+  		  break unless validates = instance_exec( «input_bindings», & this_validation_proc )
+      end
     end
     
     return validates
     
   end
   
-  ##########################################
-  #  __validation_procs_validate_value__?  #
-  ##########################################
-
-  def __validation_procs_validate_value__?( binding_value = @__value__ )
-
-    validates = false
-
-		__validation_procs__.each do |this_validation_proc|
-		  break unless validates = instance_exec( __input_bindings__, & this_validation_proc )
-    end
+  ################
+  #  «value»=  #
+  ################
+  
+  def «value»=( object )
     
-    return validates
+    return input.«value» = object
+    
+  end
 
+  ###############
+  #  «value»  #
+  ###############
+  
+  def «value»
+
+    return input.«value»
+    
   end
 
   ##############
@@ -41,7 +48,7 @@ module ::Perspective::HTML::Form::InputBinding::InstanceBinding
 
   def success!
 
-    __success_procs__.each do |this_success_proc|
+    «success_procs».each do |this_success_proc|
       instance_exec( & this_success_proc )
     end
 
@@ -53,7 +60,7 @@ module ::Perspective::HTML::Form::InputBinding::InstanceBinding
   
   def failure!
 
-    __failure_procs__.each do |this_failure_proc|
+    «failure_procs».each do |this_failure_proc|
       instance_exec( & this_failure_proc )
     end
     

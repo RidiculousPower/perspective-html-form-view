@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 require_relative '../../../../lib/perspective/html/form.rb'
 
@@ -10,13 +11,9 @@ describe ::Perspective::HTML::Form::Input do
       include ::Perspective::HTML::Form::Input
       
       has_binding?( :input ).should == true
-      method_defined?( :input_view ).should == true
       has_binding?( :value ).should == true
-      method_defined?( :value_view ).should == true
       has_binding?( :label ).should == true
-      method_defined?( :label_view ).should == true
       has_binding?( :error ).should == true
-      method_defined?( :error_view ).should == true
       
       input.configure do |input_instance|
         self.name = 'path-to-generic_input'
@@ -25,9 +22,7 @@ describe ::Perspective::HTML::Form::Input do
     end
 
     ::Perspective::HTML::Form::Input::MockInput.new.instance_eval do
-      label_view.for_input.should == input_view
-      error_view.for_input.should == input_view
-      label_view.text = 'Generic Input'
+      label.text = 'Generic Input'
       html_node = to_html_node
       html_node.children[2][ 'name' ].should == 'path-to-generic_input'
     end

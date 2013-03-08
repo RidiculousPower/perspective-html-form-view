@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML
 	module Form
@@ -5,14 +6,14 @@ module ::Perspective::HTML
     end
     module InputBinding
     end
-		module ClassInstance
+		module SingletonInstance
 		  module Bindings
 		    module Input
 	      end
 	    end
 		end
 		module Input
-		  module ClassInstance
+		  module SingletonInstance
       end
 	  end
 		module ObjectInstance

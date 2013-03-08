@@ -1,5 +1,4 @@
-
-begin ; require 'development' ; rescue ::LoadError ; end
+# -*- encoding : utf-8 -*-
 
 require 'perspective/html/elements'
 require 'perspective/html/view_model'
@@ -24,8 +23,8 @@ module ::Perspective::HTML::Form
 	
 	include ::Perspective::HTML::Form::ObjectInstance
 
-  include ::Perspective::HTML::Elements::Form::Interface
+  include ::Perspective::HTML::Elements::Form::FormInterface
 	
-	cluster( :perspective ).before_include_or_extend.cascade.extend( ::Perspective::HTML::Form::ClassInstance )
+	cluster( :perspective ).before_include_or_extend.cascade.extend( ::Perspective::HTML::Form::SingletonInstance )
 
 end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Perspective::HTML::Form::RackApplication
   
@@ -13,7 +14,7 @@ module ::Perspective::HTML::Form::RackApplication
 
     # if we have POST or PUT with our hidden input route field, process form results
     if @request.post? || @request.get?                                                       and 
-       form_route_key = ::Perspective::HTML::Form.__hidden_input_for_form_route_input_name__ and
+       form_route_key = ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route» and
        form_route_string = @request.raw_parameters.delete( form_route_key )
 
       process_form_values( form_route_string )
@@ -57,7 +58,7 @@ module ::Perspective::HTML::Form::RackApplication
     end
     
     
-    form_instance.__initialize_from_form_parameters__
+    form_instance.«initialize_from_form_parameters»
      
     # redirect based on success/failure
     if form_instance.validates?

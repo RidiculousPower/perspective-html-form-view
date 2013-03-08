@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 require_relative '../../../../lib/perspective/html/form.rb'
 
@@ -16,19 +17,19 @@ describe ::Perspective::HTML::Form::Request do
         attr_text_input :one, :two
         self::DataValidationClass.method_defined?( :one ).should == true
         self::DataValidationClass.method_defined?( :two ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockSubViewPathToSomeOther
         include ::Perspective::View
         attr_form :binding, ::Perspective::Request::Mock::MockSubViewPathToSomeOtherBinding
-        __has_input__?.should == true
+        has_input?.should == true
         self::DataValidationClass.method_defined?( :binding ).should == true
       end
       class MockSubViewPathToSome
         include ::Perspective::View
         attr_view :other, ::Perspective::Request::Mock::MockSubViewPathToSomeOther
         self::DataValidationClass.method_defined?( :other ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockSubViewPathToAnotherBinding
         include ::Perspective::HTML::Form
@@ -36,13 +37,13 @@ describe ::Perspective::HTML::Form::Request do
         self::DataValidationClass.method_defined?( :one ).should == true
         self::DataValidationClass.method_defined?( :two ).should == true
         self::DataValidationClass.method_defined?( :three ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockSubViewPathToAnother
         include ::Perspective::View
         attr_view :binding, ::Perspective::Request::Mock::MockSubViewPathToAnotherBinding
         self::DataValidationClass.method_defined?( :binding ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockSubViewPathToBinding
         include ::Perspective::HTML::Form
@@ -50,7 +51,7 @@ describe ::Perspective::HTML::Form::Request do
         self::DataValidationClass.method_defined?( :one ).should == true
         self::DataValidationClass.method_defined?( :two ).should == true
         self::DataValidationClass.method_defined?( :three ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockSubViewPathTo
         include ::Perspective::View
@@ -60,19 +61,19 @@ describe ::Perspective::HTML::Form::Request do
         self::DataValidationClass.method_defined?( :binding ).should == true
         self::DataValidationClass.method_defined?( :another ).should == true
         self::DataValidationClass.method_defined?( :some ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockSubViewPath
         include ::Perspective::View
         attr_view :to, ::Perspective::Request::Mock::MockSubViewPathTo
         self::DataValidationClass.method_defined?( :to ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
       class MockForm
         include ::Perspective::HTML::Form
         attr_view :path, ::Perspective::Request::Mock::MockSubViewPath
         self::DataValidationClass.method_defined?( :path ).should == true
-        __has_input__?.should == true
+        has_input?.should == true
       end
 
       def raw_parameters

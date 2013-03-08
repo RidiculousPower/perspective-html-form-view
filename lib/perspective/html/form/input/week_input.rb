@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 
 class ::Perspective::HTML::Form::Input::WeekInput
 
   include ::Perspective::HTML::Form::Input
 
-  input.__view_class__ = ::Perspective::HTML::Elements::Form::Input::WeekInput 
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::WeekInput 
  
 end
