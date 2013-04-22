@@ -2,7 +2,7 @@
 
 require_relative '../../../../lib/perspective/html/form.rb'
 
-describe ::Perspective::HTML::Form::Request do
+describe ::Perspective::HTML::Form::View::Request do
   
   ################################
 	#  initialize_form_parameters  #
@@ -10,7 +10,7 @@ describe ::Perspective::HTML::Form::Request do
   
   it 'it can turn a hash of PUT/POST data with keys named path-to-binding into a nested data validation object' do
     class ::Perspective::Request::Mock
-      include ::Perspective::HTML::Form::Request
+      include ::Perspective::HTML::Form::View::Request
 
       class MockSubViewPathToSomeOtherBinding
         include ::Perspective::HTML::Form

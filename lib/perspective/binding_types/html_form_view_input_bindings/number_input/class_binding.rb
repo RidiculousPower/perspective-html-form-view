@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::NumberInput::ClassBinding
+class ::Perspective::BindingTypes::HTMLFormViewInputBindings::NumberInput::ClassBinding
 
   include ::Perspective::HTML::Form::View::Input
 
-  input.«view_class» = ::Perspective::HTML::Elements::Form::View::Input::NumberInput 
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::NumberInput 
   
 end

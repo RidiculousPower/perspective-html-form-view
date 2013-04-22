@@ -1,5 +1,6 @@
+# -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::TextInput::ClassBinding
+class ::Perspective::BindingTypes::HTMLFormViewInputBindings::TextInput::ClassBinding
 
   include ::Perspective::HTML::Form::View::Input
   

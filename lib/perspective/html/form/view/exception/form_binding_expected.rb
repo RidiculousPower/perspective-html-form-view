@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-class ::Perspective::HTMLL::Form::View::Exception::FormBindingExpected < ::ArgumentError
+class ::Perspective::HTML::Form::View::Exception::FormBindingExpected < ::ArgumentError
   
   def initialize( binding_instance )
     

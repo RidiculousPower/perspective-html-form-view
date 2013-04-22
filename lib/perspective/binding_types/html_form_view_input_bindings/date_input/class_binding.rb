@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::DateInput::ClassBinding
+class ::Perspective::BindingTypes::HTMLFormViewInputBindings::DateInput::ClassBinding
 
   include ::Perspective::HTML::Form::View::Input
 
-  input.«view_class» = ::Perspective::HTML::Elements::Form::View::Input::DateInput 
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::DateInput 
   
 end

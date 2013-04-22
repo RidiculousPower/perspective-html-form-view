@@ -4,11 +4,11 @@ require_relative '../../../lib/perspective/html/form.rb'
 
 describe ::Perspective::HTML::Form do
   
-  before :all do
+  before :each do
     
     # declare a form with a nested form and several inputs
     # the nested form should also have a nested form
-    class ::Perspective::HTML::Form::MockC
+    class ::Perspective::HTML::Form::View::MockC
       include ::Perspective::HTML::Form
       attr_text_input :c_inputA do
         c_inputA.view.label.«value» = 'C - Input A:'
@@ -23,9 +23,9 @@ describe ::Perspective::HTML::Form do
       end
       attr_order :c_inputA, :c_inputB, :c_inputC
     end
-    class ::Perspective::HTML::Form::MockB
+    class ::Perspective::HTML::Form::View::MockB
       include ::Perspective::HTML::Form
-      attr_form    :c, ::Perspective::HTML::Form::MockC
+      attr_form    :c, ::Perspective::HTML::Form::View::MockC
       attr_text_input :b_inputA do
         b_inputA.view.label.«value» = 'B - Input A:'
       end
@@ -37,9 +37,9 @@ describe ::Perspective::HTML::Form do
       end
       attr_order :b_inputA, :b_inputB, :b_inputC, :c
     end
-    class ::Perspective::HTML::Form::MockA
+    class ::Perspective::HTML::Form::View::MockA
       include ::Perspective::HTML::Form
-      attr_form    :b, ::Perspective::HTML::Form::MockB
+      attr_form    :b, ::Perspective::HTML::Form::View::MockB
       attr_text_input :a_inputA do
         a_inputA.view.label.«value» = 'A - Input A:'
       end
@@ -56,7 +56,7 @@ describe ::Perspective::HTML::Form do
   
   it 'permits nesting of forms; nested forms are rendered as divs' do
 
-    form = ::Perspective::HTML::Form::MockA.new
+    form = ::Perspective::HTML::Form::View::MockA.new
 
     form.rendering_empty!
     
@@ -83,7 +83,7 @@ describe ::Perspective::HTML::Form do
 
     html_node.children[3].name.should == 'div'
     html_node.children[3][ 'id' ].should == 'b'
-    html_node.children[3][ 'class' ].should == 'Perspective::HTML::Form::MockB'
+    html_node.children[3][ 'class' ].should == 'Perspective::HTML::Form::View::MockB'
 
       html_node.children[3].children[0].name.should == 'div'
       html_node.children[3].children[0][ 'id' ].should == 'b::b_inputA'
@@ -99,7 +99,7 @@ describe ::Perspective::HTML::Form do
 
       html_node.children[3].children[3].name.should == 'div'
       html_node.children[3].children[3][ 'id' ].should == 'b::c'
-      html_node.children[3].children[3][ 'class' ].should == 'Perspective::HTML::Form::MockC'
+      html_node.children[3].children[3][ 'class' ].should == 'Perspective::HTML::Form::View::MockC'
 
         html_node.children[3].children[3].children[0].name.should == 'div'
         html_node.children[3].children[3].children[0][ 'id' ].should == 'b::c::c_inputA'
@@ -114,7 +114,7 @@ describe ::Perspective::HTML::Form do
         html_node.children[3].children[3].children[2][ 'class' ].should == 'Perspective::HTML::Form::View::Input::TextInput'
 
     html_node.children[4].name.should == 'input'
-    html_node.children[4][ 'name' ].should == ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route»
+    html_node.children[4][ 'name' ].should == ::Perspective::HTML::Form::View.«input_name_for_hidden_input_for_form_route»
     
   end
 
@@ -122,7 +122,7 @@ describe ::Perspective::HTML::Form do
     
     # simulate POST and ensure proper processing/validation
     
-    ::Perspective.root = ::Perspective::HTML::Form::MockA
+    ::Perspective.root = ::Perspective::HTML::Form::View::MockA
 
     mock_request = ::Rack::MockRequest.new( ::Perspective )
     
@@ -137,7 +137,7 @@ describe ::Perspective::HTML::Form do
                   'b' + delimiter + 'c' + delimiter + 'c_inputA' + delimiter + 'input' => 'value_bc_A',
                   'b' + delimiter + 'c' + delimiter + 'c_inputB' + delimiter + 'input' => 'value_bc_B',
                   'b' + delimiter + 'c' + delimiter + 'c_inputC' + delimiter + 'input' => 'value_bc_C',
-                  ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route» => '' }
+                  ::Perspective::HTML::Form::View.«input_name_for_hidden_input_for_form_route» => '' }
 
     mock_response = mock_request.post( 'some/path', :params => post_hash )
     

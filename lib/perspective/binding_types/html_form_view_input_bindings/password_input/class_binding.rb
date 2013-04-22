@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::PasswordInput::ClassBinding
+class ::Perspective::BindingTypes::HTMLFormViewInputBindings::PasswordInput::ClassBinding
 
   include ::Perspective::HTML::Form::View::Input
 
-  input.«view_class» = ::Perspective::HTML::Elements::Form::View::Input::PasswordInput
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::PasswordInput
   
 end

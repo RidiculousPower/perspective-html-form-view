@@ -2,6 +2,6 @@
 
 module ::Perspective
 
-  extend ::Perspective::HTML::Form::RackApplication
+  extend ::Perspective::HTML::Form::View::RackApplication
 
 end

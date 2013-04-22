@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::TextAreaInput::ClassBinding
+class ::Perspective::BindingTypes::HTMLFormViewInputBindings::TextareaInput::ClassBinding
 
   include ::Perspective::HTML::Form::View::Input
  
-  input.«view_class» = ::Perspective::HTML::Elements::Form::View::Input::TextInput::TextAreaInput
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::TextInput::TextAreaInput
   
 end

@@ -4,7 +4,7 @@ module ::Perspective::HTML::Form::View::ObjectInstance
   
   include ::Perspective::HTML::View::ObjectInstance
   
-  include ::Perspective::HTML::Form::Configuration
+  include ::Perspective::HTML::Form::View::Configuration
 
   include ::CascadingConfiguration::Setting
   
@@ -27,7 +27,7 @@ module ::Perspective::HTML::Form::View::ObjectInstance
   #  «input_name_for_hidden_input_for_form_route» Default  #
   ##########################################################
 
-  self.«input_name_for_hidden_input_for_form_route»   = '«Form»'
+  self.«input_name_for_hidden_input_for_form_route» = '«Form»'
   
   ##############################
   #  «subform_container_tag»   #
@@ -40,13 +40,13 @@ module ::Perspective::HTML::Form::View::ObjectInstance
   #  subform_container_tag  #
   ###########################
 
-  Controller.alias_module_and_instance_methods( :subform_container_tag, :«subform_container_tag» )
+  self::Controller.alias_module_and_instance_methods( :subform_container_tag, :«subform_container_tag» )
 
   ############################
   #  subform_container_tag=  #
   ############################
 
-  Controller.alias_module_and_instance_methods( :subform_container_tag=, :«subform_container_tag»= )
+  self::Controller.alias_module_and_instance_methods( :subform_container_tag=, :«subform_container_tag»= )
 
   #####################################
   #  «subform_container_tag» Default  #
@@ -54,11 +54,11 @@ module ::Perspective::HTML::Form::View::ObjectInstance
 
   self.«subform_container_tag» = :div
   
-  #######################################
-	#  «initialize_from_form_parameters»  #
-  #######################################
+  ######################################
+	#  initialize«from_form_parameters»  #
+  ######################################
 	
-  def «initialize_from_form_parameters»
+  def initialize«from_form_parameters»
 
     # we have 'path-to-binding' => value
     # we want to turn it into path.to.binding = value
@@ -118,11 +118,7 @@ module ::Perspective::HTML::Form::View::ObjectInstance
 
   def validates?
     
-    validates = false
-    
-    validates = validation_procs_validate? if inputs_validate?
-    
-    return validates
+    return inputs_validate? ? validation_procs_validate? : false
     
   end
   
@@ -201,7 +197,7 @@ module ::Perspective::HTML::Form::View::ObjectInstance
     
     hidden_binding_node = ::Nokogiri::XML::Node.new( 'input', document )
 
-    hidden_binding_node[ 'name' ] = ::Perspective::HTML::Form.«input_name_for_hidden_input_for_form_route»
+    hidden_binding_node[ 'name' ] = ::Perspective::HTML::Form::View.«input_name_for_hidden_input_for_form_route»
     hidden_binding_node[ 'type' ] = 'hidden'
     hidden_binding_node[ 'value' ] = «route_string».to_s
     

@@ -5,15 +5,25 @@ module ::Perspective::HTML::Form::View::Configuration
   include ::CascadingConfiguration::Setting
   include ::CascadingConfiguration::Array::Unique
 
+  ###############
+  #  «nested»   #
+  #  «nested»=  #
+  ###############
+
+  attr_configuration :«nested»
+  
+  self.«nested» = false
+  
   #############
   #  nested?  #
-  #  nested=  #
   #############
 
-  attr_configuration :nested? => :nested=
-  
-  self.nested = false
-  
+  def nested?
+
+    return self.«nested»
+
+  end
+
   #############
   #  nested!  #
   #############
@@ -46,7 +56,7 @@ module ::Perspective::HTML::Form::View::Configuration
   #  input_bindings  #
   ####################
 
-  Controller.alias_module_and_instance_methods( :input_bindings, :«input_bindings» )
+  self::Controller.alias_module_and_instance_methods( :input_bindings, :«input_bindings» )
 
   ########################
   #  «subform_bindings»  #
@@ -70,7 +80,7 @@ module ::Perspective::HTML::Form::View::Configuration
   #  subform_bindings  #
   ######################
 
-  Controller.alias_module_and_instance_methods( :subform_bindings, :«subform_bindings» )
+  self::Controller.alias_module_and_instance_methods( :subform_bindings, :«subform_bindings» )
 
   ################
   #  «validate»  #
@@ -130,7 +140,7 @@ module ::Perspective::HTML::Form::View::Configuration
   #  validation_procs  #
   ######################
 
-  Controller.alias_module_and_instance_methods( :validation_procs, :«validation_procs»  )
+  self::Controller.alias_module_and_instance_methods( :validation_procs, :«validation_procs»  )
 
   #####################
   #  «success_procs»  #
@@ -138,26 +148,32 @@ module ::Perspective::HTML::Form::View::Configuration
 
   attr_unique_array  :«success_procs»
 
-  Controller.alias_module_and_instance_methods( :success_procs, :«success_procs» )
+  ###################
+  #  success_procs  #
+  ###################
+
+  self::Controller.alias_module_and_instance_methods( :success_procs, :«success_procs» )
   
-  #######################
+  #####################
   #  «failure_procs»  #
-  #######################
+  #####################
 
   attr_unique_array  :«failure_procs»
 
-  Controller.alias_module_and_instance_methods( :failure_procs, :«failure_procs» )
+  ###################
+  #  failure_procs  #
+  ###################
 
-  #############################
+  self::Controller.alias_module_and_instance_methods( :failure_procs, :«failure_procs» )
+
+  ###########################
   #  «process_form_values»  #
-  #############################
+  ###########################
 
   def «process_form_values»
     
-    validates = false
-    
-    # validate inputs, then call form-level validation procs
-    ( validates = «validate_form_values» ) ? «call_success_procs» : «call_failure_procs»
+    validates = «validate_form_values»
+    validates ? «call_success_procs» : «call_failure_procs»
 
     return validates
     

@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::TypesController
+module ::Perspective::BindingTypes::HTMLFormViewInputBindings::TypesController
   
   #############################
   #  self.new_class_bindings  #

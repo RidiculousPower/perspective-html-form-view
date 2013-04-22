@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::ClassBinding
+module ::Perspective::BindingTypes::HTMLFormViewInputBindings::ClassBinding
 
 end

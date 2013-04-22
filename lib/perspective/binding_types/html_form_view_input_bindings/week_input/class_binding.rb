@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 
-module ::Perspective::Bindings::HTMLFormViewInputBindings::WeekInput::ClassBinding
+class ::Perspective::BindingTypes::HTMLFormViewInputBindings::WeekInput::ClassBinding
 
   include ::Perspective::HTML::Form::View::Input
 
-  input.«view_class» = ::Perspective::HTML::Elements::Form::View::Input::WeekInput 
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::WeekInput 
   
 end

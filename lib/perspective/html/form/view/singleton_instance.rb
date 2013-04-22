@@ -3,9 +3,6 @@
 module ::Perspective::HTML::Form::View::SingletonInstance
   
   include ::Perspective::HTML::Form::View::Configuration
-
-
-  
-  include ::Perspective::Bindings::BindingTypeContainer::HTMLFormInput
+  include ::Perspective::BindingTypes::HTMLFormViewInputBindings
   
 end

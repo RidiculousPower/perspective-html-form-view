@@ -14,12 +14,11 @@ module ::Perspective::HTML::Form::View::SingletonAndObjectInstance
   
   def «action»=( get_or_post )
     
-    case action = get_or_post.upcase
-
+    case action = get_or_post.to_s.upcase
       when :GET, :POST
-
         super( action )
-
+      else
+        raise ::ArgumentError, ':GET or :POST expected; got :' << action.to_s << '.'
     end
     
   end
@@ -28,13 +27,13 @@ module ::Perspective::HTML::Form::View::SingletonAndObjectInstance
   #  action  #
   ############
   
-  Controller.alias_module_and_instance_methods( :action, :«action» )
+  self::Controller.alias_module_and_instance_methods( :action, :«action» )
 
   #############
   #  action=  #
   #############
     
-  Controller.alias_module_and_instance_methods( :action=, :«action»= )  
+  self::Controller.alias_module_and_instance_methods( :action=, :«action»= )  
   alias_method( :action=, :«action»= )
 
   ######################
