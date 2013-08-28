@@ -6,7 +6,7 @@ module ::Perspective::HTML::Form::View::ObjectInstance
   
   include ::Perspective::HTML::Form::View::Configuration
 
-  include ::CascadingConfiguration::Setting
+  extend ::CascadingConfiguration::Setting
   
   self.«container_tag» = :form
 
@@ -40,13 +40,15 @@ module ::Perspective::HTML::Form::View::ObjectInstance
   #  subform_container_tag  #
   ###########################
 
-  self::Controller.alias_module_and_instance_methods( :subform_container_tag, :«subform_container_tag» )
+  alias_method :subform_container_tag, :«subform_container_tag»
+#  self::Controller.alias_module_and_instance_methods( :subform_container_tag, :«subform_container_tag» )
 
   ############################
   #  subform_container_tag=  #
   ############################
 
-  self::Controller.alias_module_and_instance_methods( :subform_container_tag=, :«subform_container_tag»= )
+  alias_method :subform_container_tag=, :«subform_container_tag»=
+#  self::Controller.alias_module_and_instance_methods( :subform_container_tag=, :«subform_container_tag»= )
 
   #####################################
   #  «subform_container_tag» Default  #

@@ -2,8 +2,7 @@
 
 class ::Perspective::BindingTypes::HTMLFormViewInputBindings::NumberInput::ClassBinding
 
-  include ::Perspective::HTML::Form::View::Input
-
+  self.«view_class» = ::Perspective::HTML::Form::View::Input
   input.«view_class» = ::Perspective::HTML::Elements::Form::Input::NumberInput 
   
 end

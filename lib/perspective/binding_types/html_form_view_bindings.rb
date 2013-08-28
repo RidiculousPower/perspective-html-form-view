@@ -6,6 +6,6 @@ module ::Perspective::BindingTypes::HTMLFormViewBindings
   #  attr_form  #
   ###############
 
-  define_binding_type( :form, :view )
+  define_binding_type( :form )
 
 end

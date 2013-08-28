@@ -9,7 +9,7 @@ module ::Perspective::BindingTypes::HTMLFormViewBindings::ClassBinding
   #################################
 
   def initialize«common_finalize»
-    
+
     super
 
     initialize«for_bound_container»

@@ -2,8 +2,8 @@
 
 module ::Perspective::HTML::Form::View::Configuration
   
-  include ::CascadingConfiguration::Setting
-  include ::CascadingConfiguration::Array::Unique
+  extend ::CascadingConfiguration::Setting
+  extend ::CascadingConfiguration::Array::Unique
 
   ###############
   #  «nested»   #
@@ -56,7 +56,8 @@ module ::Perspective::HTML::Form::View::Configuration
   #  input_bindings  #
   ####################
 
-  self::Controller.alias_module_and_instance_methods( :input_bindings, :«input_bindings» )
+  alias_method :input_bindings, :«input_bindings»
+#  self::Controller.alias_module_and_instance_methods( :input_bindings, :«input_bindings» )
 
   ########################
   #  «subform_bindings»  #
@@ -79,8 +80,9 @@ module ::Perspective::HTML::Form::View::Configuration
   ######################
   #  subform_bindings  #
   ######################
-
-  self::Controller.alias_module_and_instance_methods( :subform_bindings, :«subform_bindings» )
+  
+  alias_method :subform_bindings, :«subform_bindings»
+#  self::Controller.alias_module_and_instance_methods( :subform_bindings, :«subform_bindings» )
 
   ################
   #  «validate»  #
@@ -140,7 +142,8 @@ module ::Perspective::HTML::Form::View::Configuration
   #  validation_procs  #
   ######################
 
-  self::Controller.alias_module_and_instance_methods( :validation_procs, :«validation_procs»  )
+  alias_method :validation_procs, :«validation_procs»
+#  self::Controller.alias_module_and_instance_methods( :validation_procs, :«validation_procs»  )
 
   #####################
   #  «success_procs»  #
@@ -152,7 +155,8 @@ module ::Perspective::HTML::Form::View::Configuration
   #  success_procs  #
   ###################
 
-  self::Controller.alias_module_and_instance_methods( :success_procs, :«success_procs» )
+  alias_method :success_procs, :«success_procs»
+#  self::Controller.alias_module_and_instance_methods( :success_procs, :«success_procs» )
   
   #####################
   #  «failure_procs»  #
@@ -164,7 +168,8 @@ module ::Perspective::HTML::Form::View::Configuration
   #  failure_procs  #
   ###################
 
-  self::Controller.alias_module_and_instance_methods( :failure_procs, :«failure_procs» )
+  alias_method :failure_procs, :«failure_procs»
+#  self::Controller.alias_module_and_instance_methods( :failure_procs, :«failure_procs» )
 
   ###########################
   #  «process_form_values»  #

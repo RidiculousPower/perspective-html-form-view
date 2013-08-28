@@ -3,7 +3,6 @@
 module ::Perspective::BindingTypes::HTMLFormViewInputBindings::InstanceBinding
 
   extend ::Forwardable
-  include ::Perspective::HTML::Form::View::Configuration
 
   ######################
   #  value_validates?  #

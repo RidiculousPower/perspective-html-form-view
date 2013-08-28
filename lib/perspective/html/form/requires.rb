@@ -15,6 +15,7 @@
   
   '../../binding_types/html_form_view_input',
   '../../binding_types/html_form_view_input_bindings',
+  '../../binding_types/html_form_view_input_bindings/types_controller',
   '../../binding_types/html_form_view_input_bindings/class_binding',
   '../../binding_types/html_form_view_input_bindings/instance_binding',
   '../../binding_types/html_form_view_input_bindings/button_input/class_binding',
@@ -22,7 +23,7 @@
   '../../binding_types/html_form_view_input_bindings/color_input/class_binding',
   '../../binding_types/html_form_view_input_bindings/datalist_input/class_binding',
   '../../binding_types/html_form_view_input_bindings/date_input/class_binding',
-  '../../binding_types/html_form_view_input_bindings/date_time_input/class_binding',
+  '../../binding_types/html_form_view_input_bindings/datetime_input/class_binding',
   '../../binding_types/html_form_view_input_bindings/email_input/class_binding',
   '../../binding_types/html_form_view_input_bindings/file_input/class_binding',
   '../../binding_types/html_form_view_input_bindings/hidden_input/class_binding',

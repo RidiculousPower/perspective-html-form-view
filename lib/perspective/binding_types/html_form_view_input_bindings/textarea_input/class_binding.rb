@@ -2,8 +2,7 @@
 
 class ::Perspective::BindingTypes::HTMLFormViewInputBindings::TextareaInput::ClassBinding
 
-  include ::Perspective::HTML::Form::View::Input
- 
-  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::TextInput::TextAreaInput
+  self.«view_class» = ::Perspective::HTML::Form::View::Input
+  input.«view_class» = ::Perspective::HTML::Elements::Form::Input::TextInput::TextareaInput
   
 end

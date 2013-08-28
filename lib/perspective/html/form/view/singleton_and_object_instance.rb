@@ -27,14 +27,15 @@ module ::Perspective::HTML::Form::View::SingletonAndObjectInstance
   #  action  #
   ############
   
-  self::Controller.alias_module_and_instance_methods( :action, :«action» )
+  alias_method :action, :«action»
+#  self::Controller.alias_module_and_instance_methods( :action, :«action» )
 
   #############
   #  action=  #
   #############
     
-  self::Controller.alias_module_and_instance_methods( :action=, :«action»= )  
-  alias_method( :action=, :«action»= )
+  alias_method :action=, :«action»=
+#  self::Controller.alias_module_and_instance_methods( :action=, :«action»= )  
 
   ######################
   #  «action» Default  #
